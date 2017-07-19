@@ -1,0 +1,11 @@
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Service.deps.json
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Service.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.csprojResolveAssemblyReference.cache
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.AssemblyInfo.cs
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Service.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Data.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Model.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Data.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\bin\Debug\netcoreapp1.1\Model.pdb
