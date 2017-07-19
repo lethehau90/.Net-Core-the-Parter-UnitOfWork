@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Service;
 using AutoMapper;
 using Model;
-using WebApi.ViewModels;
 using Data.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,16 +24,12 @@ namespace WebApi.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public   async  Task<IEnumerable<Student>> GetAll()
-        {
-            //var student = _studentService.GetAll();
-            //var studentModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(student);
-            //return Ok(new { student = studentModel });
-
-            var query = _unitOfWork.GetRepository<Student>();
-            var values = await query.GetAll().ToListAsync();
-            return values;
-        }
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    var student = _studentService.GetAll();
+        //    var studentModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(student);
+        //    return Ok(new { student = studentModel });
+        //}
     }
 }

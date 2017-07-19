@@ -8,8 +8,13 @@ using Data.Repositories;
 
 namespace Service
 {
-    public interface IStudentService : IBaseInterface<Student>
+    public interface IStudentService 
     {
+        IQueryable<Student> Query();
+        IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize);
+        IQueryable<Student> GetPagedListAsync(string search, int pageIndex, int pageSize);
+        IQueryable<Student> FromSql(string sql, string Id);
+        
 
     }
     public class StudentService : IStudentService
@@ -20,42 +25,24 @@ namespace Service
             _studentRepository = studentRepository;
         }
 
-        public void Insert(Student t)
+        public IQueryable<Student> FromSql(string sql, string Id)
         {
-            _studentRepository.Insert(t);
+            throw new NotImplementedException();
         }
 
-        public void Delete(int Id)
+        public IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize)
         {
-            var studentById = _studentRepository.GetSingleByCondition(x=>x.Id.Equals(Id));
-            _studentRepository.Delete(studentById);
+            throw new NotImplementedException();
         }
 
-        public void Update(Student t)
+        public IQueryable<Student> GetPagedListAsync(string search, int pageIndex, int pageSize)
         {
-            _studentRepository.Update(t);
+            throw new NotImplementedException();
         }
 
-        public IQueryable<Student> GetAll()
+        public IQueryable<Student> Query()
         {
-            return _studentRepository.GetAll();
-        }
-
-        public IQueryable<Student> GetAllPage(string keyword, int page, int pageSize, string sort, out int totalRow)
-        {
-            IQueryable<Student> query = _studentRepository.GetAll();
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                query = query.Where(x => x.Name.Contains(keyword));
-            }
-
-            totalRow = query.Count();
-           return query.OrderBy(x => x.Name).Skip((page - 1)* pageSize).Take(pageSize);
-        }
-
-        public IQueryable<Student> GetById(int Id)
-        {
-            return _studentRepository.GetMulti(x=>x.Id.Equals(Id));
+            throw new NotImplementedException();
         }
     }
 }

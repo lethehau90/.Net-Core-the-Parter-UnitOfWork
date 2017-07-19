@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Model;
-using WebApi.ViewModels;
+using Service.ViewModels;
 
-namespace WebApi.Mappings
+namespace Service.Mappings
 {
     public class AutoMapperConfiguration : Profile
     {

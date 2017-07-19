@@ -13,8 +13,8 @@ using Data;
 using Data.Repositories;
 using Service;
 using AutoMapper;
-using WebApi.Mappings;
 using Data.Infrastructure.UnitOfWork;
+using Service.Mappings;
 
 namespace WebApi
 {

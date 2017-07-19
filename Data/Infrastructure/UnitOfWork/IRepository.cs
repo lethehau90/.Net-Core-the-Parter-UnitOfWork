@@ -190,6 +190,8 @@ namespace Data.Infrastructure.UnitOfWork
 
         bool CheckContains(Expression<Func<TEntity, bool>> predicate, bool disableTracking = true);
 
+        IQueryable<TEntity> AllIncluding(Expression<Func<TEntity, object>>[] includeProperties, bool disableTracking = true);
+
         //Edit custom HauLe
     }
 }

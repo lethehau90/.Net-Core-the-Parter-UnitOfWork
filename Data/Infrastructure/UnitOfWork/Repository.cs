@@ -459,6 +459,26 @@ namespace Data.Infrastructure.UnitOfWork
             return set.Count<TEntity>(predicate) > 0;
         }
 
+        //AllIncluding
+        public virtual IQueryable<TEntity> AllIncluding(Expression<Func<TEntity, object>>[] includeProperties, bool disableTracking = true)
+        {
+            IQueryable<TEntity> set;
+            if (disableTracking)
+            {
+                set = _dbSet.AsNoTracking();
+            }
+            else
+            {
+                set = _dbSet;
+            }
+            foreach (var includeProperty in includeProperties)
+            {
+                set = set.Include(includeProperty);
+            }
+
+            return set;
+        }
+
         //Edit custom HauLe
     }
 }
