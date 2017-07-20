@@ -48,33 +48,6 @@ namespace Data.Infrastructure.UnitOfWork
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate. This method default no-tracking query.
-        /// </summary>
-        /// <param name="predicate">A function to test each element for a condition.</param>
-        /// <param name="disableTracking"><c>True</c> to disable changing tracking; otherwise, <c>false</c>. Default to <c>true</c>.</param>
-        /// <returns>An <see cref="IQueryable{TEntity}"/> that contains elements that satisfy the condition specified by predicate.</returns>
-        /// <remarks>This method default no-tracking query.</remarks>
-        public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate = null, bool disableTracking = true)
-        {
-            IQueryable<TEntity> set;
-            if (disableTracking)
-            {
-                set = _dbSet.AsNoTracking();
-            }
-            else
-            {
-                set = _dbSet;
-            }
-
-            if (predicate != null)
-            {
-                set = set.Where(predicate);
-            }
-
-            return set;
-        }
-
-        /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>
         /// <param name="predicate">A function to test each element for a condition.</param>
@@ -311,20 +284,6 @@ namespace Data.Infrastructure.UnitOfWork
 
 
         //Edit custom HauLe
-        //GetMany
-        public virtual IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> where, bool disableTracking = true)
-        {
-            IQueryable<TEntity> set;
-            if (disableTracking)
-            {
-                set = _dbSet.AsNoTracking();
-            }
-            else
-            {
-                set = _dbSet;
-            }
-            return set.Where(where).AsQueryable();
-        }
 
         //Count
         public virtual int Count(Expression<Func<TEntity, bool>> where, bool disableTracking = true)
@@ -342,7 +301,14 @@ namespace Data.Infrastructure.UnitOfWork
         }
 
         //GetAll
-        public IQueryable<TEntity> GetAll(string[] includes = null, bool disableTracking = true)
+        /// <summary>
+        /// Filters a sequence of values based on a predicate. This method default no-tracking query.
+        /// </summary>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="disableTracking"><c>True</c> to disable changing tracking; otherwise, <c>false</c>. Default to <c>true</c>.</param>
+        /// <returns>An <see cref="IQueryable{TEntity}"/> that contains elements that satisfy the condition specified by predicate.</returns>
+        /// <remarks>This method default no-tracking query.</remarks>
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null, string[] includes = null, bool disableTracking = true)
         {
             IQueryable<TEntity> set;
             if (disableTracking)
@@ -360,6 +326,10 @@ namespace Data.Infrastructure.UnitOfWork
                 foreach (var include in includes.Skip(1))
                     query = query.Include(include);
                 return query.AsQueryable();
+            }
+            if (predicate != null)
+            {
+                set = set.Where(predicate);
             }
 
             return set.AsQueryable();
@@ -457,26 +427,6 @@ namespace Data.Infrastructure.UnitOfWork
                 set = _dbSet;
             }
             return set.Count<TEntity>(predicate) > 0;
-        }
-
-        //AllIncluding
-        public virtual IQueryable<TEntity> AllIncluding(Expression<Func<TEntity, object>>[] includeProperties, bool disableTracking = true)
-        {
-            IQueryable<TEntity> set;
-            if (disableTracking)
-            {
-                set = _dbSet.AsNoTracking();
-            }
-            else
-            {
-                set = _dbSet;
-            }
-            foreach (var includeProperty in includeProperties)
-            {
-                set = set.Include(includeProperty);
-            }
-
-            return set;
         }
 
         //Edit custom HauLe

@@ -25,15 +25,6 @@ namespace Data.Infrastructure.UnitOfWork
         void ChangeTable(string table);
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate. This method default no-tracking query.
-        /// </summary>
-        /// <param name="predicate">An optional function to test each element for a condition.</param>
-        /// <param name="disableTracking"><c>True</c> to disable changing tracking; otherwise, <c>false</c>. Default to <c>true</c>.</param>
-        /// <returns>An <see cref="IQueryable{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
-        /// <remarks>This method default no-tracking query.</remarks>
-        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate = null, bool disableTracking = true);
-
-        /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>
         /// <param name="predicate">A function to test each element for a condition.</param>
@@ -176,11 +167,10 @@ namespace Data.Infrastructure.UnitOfWork
         void Delete(IEnumerable<TEntity> entities);
 
         //Edit custom HauLe
-        IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> where, bool disableTracking = true);
 
         int Count(Expression<Func<TEntity, bool>> where, bool disableTracking = true);
 
-        IQueryable<TEntity> GetAll(string[] includes = null, bool disableTracking = true);
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null, string[] includes = null, bool disableTracking = true);
 
         TEntity GetSingleByCondition(Expression<Func<TEntity, bool>> expression, string[] includes = null, bool disableTracking = true);
 
@@ -189,8 +179,6 @@ namespace Data.Infrastructure.UnitOfWork
         IQueryable<TEntity> GetMultiPaging(Expression<Func<TEntity, bool>> predicate, out int total, int index = 0, int size = 20, string[] includes = null, bool disableTracking = true);
 
         bool CheckContains(Expression<Func<TEntity, bool>> predicate, bool disableTracking = true);
-
-        IQueryable<TEntity> AllIncluding(Expression<Func<TEntity, object>>[] includeProperties, bool disableTracking = true);
 
         //Edit custom HauLe
     }
