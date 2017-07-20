@@ -11,10 +11,10 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using Data.Repositories;
-using Service;
 using AutoMapper;
 using Data.Infrastructure.UnitOfWork;
 using Service.Mappings;
+using Service.Services;
 
 namespace WebApi
 {

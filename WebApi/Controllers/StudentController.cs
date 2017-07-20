@@ -9,6 +9,7 @@ using AutoMapper;
 using Model;
 using Data.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Service.Services;
 
 namespace WebApi.Controllers
 {

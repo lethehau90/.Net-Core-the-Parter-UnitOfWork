@@ -10,7 +10,7 @@ using AutoMapper;
 using System.Threading.Tasks;
 using Data.Infrastructure.UnitOfWork;
 
-namespace Service
+namespace Service.Services
 {
     public interface IStudentService 
     {
