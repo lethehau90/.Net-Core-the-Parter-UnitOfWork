@@ -1,0 +1,12 @@
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\UnitTest.deps.json
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\UnitTest.runtimeconfig.json
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\UnitTest.runtimeconfig.dev.json
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\UnitTest.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\obj\Debug\netcoreapp1.1\UnitTest.csprojResolveAssemblyReference.cache
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\obj\Debug\netcoreapp1.1\UnitTest.AssemblyInfo.cs
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\bin\Debug\netcoreapp1.1\UnitTest.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\obj\Debug\netcoreapp1.1\UnitTest.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\UnitTest\obj\Debug\netcoreapp1.1\UnitTest.pdb
