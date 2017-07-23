@@ -237,9 +237,8 @@ namespace Data.EntiyRepository
             {
                 _resetSet = predicate != null ? _entitiesContext.Set<T>().Where<T>(predicate).AsQueryable() : _entitiesContext.Set<T>().AsQueryable();
             }
-
-            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
             total = _resetSet.Count();
+            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
             return _resetSet.AsQueryable();
         }
 

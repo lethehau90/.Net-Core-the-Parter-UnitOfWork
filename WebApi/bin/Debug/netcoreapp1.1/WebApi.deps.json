@@ -24,6 +24,7 @@
       "webapi/1.0.0": {
         "dependencies": {
           "AutoMapper": "6.1.1",
+          "Common": "1.0.0",
           "Data": "1.0.0",
           "Microsoft.ApplicationInsights.AspNetCore": "2.0.0",
           "Microsoft.AspNetCore": "1.1.2",
@@ -1853,6 +1854,17 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Xml.XmlDocument.dll": {}
+        }
+      },
+      "common/1.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.1.2"
+        },
+        "runtime": {
+          "Common.dll": {}
+        },
+        "compile": {
+          "Common.dll": {}
         }
       },
       "data/1.0.0": {
@@ -4377,6 +4389,11 @@
       "sha512": "sha512-MLCDo3oPs8LDuQcg1O8sqo6bNjngZPibDwNuGVaACjG+/PSWwh18ecFnk2tN+x6aB+qTATXaVbNqyZGWAa9aPA==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "data/1.0.0": {
       "type": "project",

@@ -75,7 +75,6 @@ namespace Data.Infrastructure.UnitOfWork
             {
                 query = query.Where(predicate);
             }
-
             if (orderBy != null)
             {
                 return orderBy(query).ToPagedList(pageIndex, pageSize);
@@ -409,9 +408,8 @@ namespace Data.Infrastructure.UnitOfWork
             {
                 _resetSet = predicate != null ? set.Where<TEntity>(predicate).AsQueryable() : set.AsQueryable();
             }
-
-            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
             total = _resetSet.Count();
+            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
             return _resetSet.AsQueryable();
         }
 

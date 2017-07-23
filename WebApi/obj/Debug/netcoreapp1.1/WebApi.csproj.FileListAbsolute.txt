@@ -13,3 +13,5 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\bin\Debug\netcoreapp1.1\
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\bin\Debug\netcoreapp1.1\Data.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\bin\Debug\netcoreapp1.1\Model.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\bin\Debug\netcoreapp1.1\Service.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\bin\Debug\netcoreapp1.1\Common.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\bin\Debug\netcoreapp1.1\Common.pdb

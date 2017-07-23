@@ -15,6 +15,7 @@ using AutoMapper;
 using Data.Infrastructure.UnitOfWork;
 using Service.Mappings;
 using Service.Services;
+using Common;//config my app
 
 namespace WebApi
 {
@@ -43,6 +44,7 @@ namespace WebApi
             services.AddDbContext<HauLeDbContext>(opstions => opstions
             .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Data")));
 
+
             // ----===========---- Dependency Injection ----===========----
             //AddUnitOfWork
             services.AddUnitOfWork<HauLeDbContext>();
@@ -68,6 +70,15 @@ namespace WebApi
             {
                 opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+
+            //Config my app
+            // Add functionality to inject IOptions<T>
+            services.AddOptions();
+            // Add our Config object so it can be injected
+            services.Configure<MySettings>(Configuration.GetSection("MySettings"));
+
+            // *If* you need access to generic IConfiguration this is **required**
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

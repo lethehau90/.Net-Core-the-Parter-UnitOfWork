@@ -9,10 +9,12 @@ using Service.ViewModels;
 using AutoMapper;
 using System.Threading.Tasks;
 using Data.Infrastructure.UnitOfWork;
+using Data.Infrastructure.PagedList;
+using Service.EntityUpdateExtensions;
 
 namespace Service.Services
 {
-    public interface IStudentService 
+    public interface IStudentService
     {
         IQueryable<StudentViewModel> GetPagedList(string search, int pageindex, int pageSize);
         Task<IQueryable<StudentViewModel>> GetPagedListAsync(string search, int pageIndex, int pageSize);
@@ -25,12 +27,12 @@ namespace Service.Services
         void Delete(StudentViewModel student);
         void Delete(int Id);
         //Custom
-        int Count();
+        int Count(int Id);
         IQueryable<StudentViewModel> GetAll();
         StudentViewModel GetSingleByCondition(int Id);
-        IQueryable<StudentViewModel> GetMulti(string name);
-        IQueryable<StudentViewModel> GetMultiPaging(int page, int pageSize,out int totalRow);
-        bool CheckContains();
+        IQueryable<StudentViewModel> GetMulti();
+        IQueryable<StudentViewModel> GetMultiPaging(int page, int pageSize, out int totalRow);
+        bool CheckContains(int Id);
     }
     public class StudentService : IStudentService
     {
@@ -42,34 +44,39 @@ namespace Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public bool CheckContains()
+        public bool CheckContains(int Id)
         {
-            return _studentRepository.CheckContains(x=>x.Id.Equals(2));
+            return _studentRepository.CheckContains(x => x.Id.Equals(Id));
         }
 
-        public int Count()
+        public int Count(int Id)
         {
-            return _studentRepository.Count(null);
+            return _studentRepository.Count(x => x.Id.Equals(Id));
         }
 
         public void Delete(StudentViewModel student)
         {
-           if(student.Id != null && student.Id != 0)
+            var query = _studentRepository.Find(student.Id);
+            if (query != null)
             {
-                _studentRepository.Delete(student);
+                _studentRepository.Delete(query);
             }
-            
+
         }
 
         public void Delete(int Id)
         {
-            _studentRepository.Delete(Id);
+            var query = _studentRepository.Find(Id);
+            if (query != null)
+            {
+                _studentRepository.Delete(query);
+            }
         }
 
         public StudentViewModel Find(int Id)
         {
             var query = _studentRepository.Find(Id);
-            var queryModel =  Mapper.Map<Student, StudentViewModel>(query);
+            var queryModel = Mapper.Map<Student, StudentViewModel>(query);
             return queryModel;
         }
 
@@ -88,66 +95,83 @@ namespace Service.Services
         public IQueryable<StudentViewModel> GetAll()
         {
             //include for <<new string[] {"Enrollments"}>>
-            var query = _studentRepository.GetAll(null,new string[] { "Enrollments" });
-            var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
-            return queryModel;
+            var query = _studentRepository.GetAll(null);
+            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
+            return queryModel.AsQueryable();
         }
 
-        public IQueryable<StudentViewModel> GetMulti(string name)
+        public IQueryable<StudentViewModel> GetMulti()
         {
-            var query = _studentRepository.GetMulti(x=>x.Name.Contains(name));
-            var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
-            return queryModel;
+            var query = _studentRepository.GetMulti(x => true);
+            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
+            return queryModel.AsQueryable();
         }
 
         public IQueryable<StudentViewModel> GetMultiPaging(int page, int pageSize, out int totalRow)
         {
-            var query = _studentRepository.GetMultiPaging(null,out totalRow,page,pageSize);
-            var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
-            return queryModel;
+            var query = _studentRepository.GetMultiPaging(null, out totalRow, page, pageSize);
+            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
+            return queryModel.AsQueryable();
         }
 
         public IQueryable<StudentViewModel> GetPagedList(string search, int pageindex, int pageSize)
         {
-            var query = _studentRepository.GetPagedList(null, null, pageindex, pageSize).Items;
-            var queryModel = Mapper.Map<IEnumerable<Student>, IQueryable<StudentViewModel>>(query);
-            return queryModel;
+            IEnumerable<Student> query;
+
+            if (string.IsNullOrEmpty(search))
+            {
+                query = _studentRepository.GetPagedList(null, null, pageindex, pageSize).Items;
+            }
+            else
+            {
+                query = _studentRepository.GetPagedList(x => x.Name.Contains(search), null, pageindex, pageSize).Items;
+            }
+            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
+            return queryModel.AsQueryable();
         }
 
-        public async Task<IQueryable<StudentViewModel>>  GetPagedListAsync(string search, int pageIndex, int pageSize)
+        public async Task<IQueryable<StudentViewModel>> GetPagedListAsync(string search, int pageIndex, int pageSize)
         {
-            var query = await _studentRepository.GetPagedListAsync(x=>x.Name.Contains(search), null, null, pageIndex, pageSize);
-            var queryModel = Mapper.Map<IEnumerable<Student>, IQueryable<StudentViewModel>>(query.Items);
-            return queryModel;
+           IPagedList<Student> query;
+
+            if (string.IsNullOrEmpty(search))
+            {
+                 query = await _studentRepository.GetPagedListAsync(null, null, null, pageIndex, pageSize);
+            }
+            else
+            {
+                 query = await _studentRepository.GetPagedListAsync(x => x.Name.Contains(search), null, null, pageIndex, pageSize);
+            }
+            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query.Items);
+            return queryModel.AsQueryable();
         }
 
         public StudentViewModel GetSingleByCondition(int Id)
         {
             var query = _studentRepository.GetSingleByCondition(x => x.Id.Equals(Id));
-            var queryModel = Mapper.Map<Student,StudentViewModel>(query);
+            var queryModel = Mapper.Map<Student, StudentViewModel>(query);
             return queryModel;
         }
 
-        public void Insert(StudentViewModel student)
+        public void Insert(StudentViewModel studentVM)
         {
-            var dataModel = Mapper.Map<StudentViewModel, Student>(student);
-            _studentRepository.Insert(dataModel);
-            _unitOfWork.SaveChanges();
-
+            var newStudent = new Student();
+            newStudent.UpdateStudent(studentVM);
+            _studentRepository.Insert(newStudent);
         }
 
-        public async Task InsertAsync(StudentViewModel student)
+        public async Task InsertAsync(StudentViewModel studentVM)
         {
-            var dataModel = Mapper.Map<StudentViewModel, Student>(student);
-            _studentRepository.Insert(dataModel);
-            await _unitOfWork.SaveChangesAsync();
+            var newStudent = new Student();
+            newStudent.UpdateStudent(studentVM);
+            await _studentRepository.InsertAsync(newStudent);
         }
 
         public void Update(StudentViewModel student)
         {
-            var dataModel = Mapper.Map<StudentViewModel, Student>(student);
-            _studentRepository.Update(dataModel);
-            _unitOfWork.SaveChanges();
+            var query = _studentRepository.Find(student.Id);
+            query.UpdateStudent(student);
+            _studentRepository.Update(query);
         }
     }
 }
