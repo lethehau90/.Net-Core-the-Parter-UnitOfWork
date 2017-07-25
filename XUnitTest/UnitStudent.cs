@@ -34,12 +34,12 @@ namespace XUnitTest
         [Fact]
         public void GetAll()
         {
-            var mockRepository = new Mock<IStudentRepository>();
+            var mockStudentRepository = new Mock<IStudentRepository>();
             var mocUnitOfWork = new Mock<IUnitOfWork>();
 
-            mockRepository.Setup(x => x.GetAll(null, null, true)).Returns(_listStudent.AsQueryable());
+            mockStudentRepository.Setup(x => x.GetAll(null, null, true)).Returns(_listStudent.AsQueryable());
 
-            _studentRepository = mockRepository.Object;
+            _studentRepository = mockStudentRepository.Object;
             _unitOfWork = mocUnitOfWork.Object;
 
             var _studentService = new StudentService(_studentRepository, _unitOfWork);
@@ -48,7 +48,6 @@ namespace XUnitTest
 
             Assert.NotNull(request.ToList());
             Assert.Equal(4, request.Count());
-
         }
 
 
