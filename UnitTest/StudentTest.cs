@@ -6,6 +6,7 @@ using Data.Repositories;
 using Data.Infrastructure.UnitOfWork;
 using Model;
 using Service.Services;
+using Xunit;
 
 namespace UnitTest
 {
@@ -32,12 +33,7 @@ namespace UnitTest
             };
         }
 
-        [TestMethod]
-        public void GetAll()
-        {
-            //set method
-            _mocRepository.Setup(m => m.GetAll()).Throws(new Exception());
-        }
+     
 
     }
 }
