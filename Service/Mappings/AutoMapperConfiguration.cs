@@ -13,11 +13,9 @@ namespace Service.Mappings
         public override string ProfileName => "AutoMapperConfiguration";
         public AutoMapperConfiguration()
         {
-
             CreateMap<Student, StudentViewModel>();
             CreateMap<Course, CourseViewModel>();
             CreateMap<Enrollment, EnrollmentViewModel>();
-
         }
     }
 }
