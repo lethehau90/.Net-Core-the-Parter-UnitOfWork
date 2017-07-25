@@ -63,9 +63,8 @@ namespace XUnitTest
                 Name = "test 5"
             };
 
-            mockStudentRepository.Setup(x => x.Insert(studentVm));
+            mockStudentRepository.Setup(x => x.Insert(It.IsAny<Student>()));
             mockStudentRepository.Setup(x => x.Find(5)).Returns(studentVm);
-            mockStudentRepository.Setup(x => x.GetAll(null, null, true)).Returns(_listStudent.AsQueryable());
 
             _studentRepository = mockStudentRepository.Object;
             _unitOfWork = mocUnitOfWork.Object;
@@ -74,17 +73,43 @@ namespace XUnitTest
 
             //insert test
             _studentService.Insert(studentVm);
-            _unitOfWork.SaveChanges();
 
             //Find the test a value 5 
             var resurt = _studentService.Find(5);
 
-            //get All the test
-            var resurtAll = _studentService.GetAll();
-
             Assert.NotNull(resurt);
             Assert.Equal(5, resurt.Id);
-            Assert.Equal(5, resurtAll.Count());
+        }
+
+        [Fact]
+        public void Update()
+        {
+            var mockStudentRepository = new Mock<IStudentRepository>();
+            var mocUnitOfWork = new Mock<IUnitOfWork>();
+
+            Student studentVm = new Student();
+            studentVm = new Student
+            {
+                Id = 4,
+                Name = "test 4"
+            };
+
+            mockStudentRepository.Setup(x => x.Insert(It.IsAny<Student>()));
+            mockStudentRepository.Setup(x => x.Find(4)).Returns(studentVm);
+
+            _studentRepository = mockStudentRepository.Object;
+            _unitOfWork = mocUnitOfWork.Object;
+
+            var _studentService = new StudentService(_studentRepository, _unitOfWork);
+
+            //insert test
+            _studentService.Update(studentVm);
+
+            //Find the test a value 5 
+            var resurt = _studentService.Find(4);
+
+            Assert.NotNull(resurt);
+            Assert.Equal(4, resurt.Id);
         }
 
 
