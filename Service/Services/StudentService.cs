@@ -148,7 +148,7 @@ namespace Service.Services
 
         public StudentViewModel GetSingleByCondition(int Id)
         {
-            var query = _studentRepository.GetSingleByCondition(x => x.Id.Equals(Id));
+            var query = _studentRepository.GetSingleByCondition(x => x.Id.Equals(Id), new string[] { "Enrollments" });
             var queryModel = Mapper.Map<Student, StudentViewModel>(query);
             return queryModel;
         }
