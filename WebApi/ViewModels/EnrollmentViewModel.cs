@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Service.ViewModels
+namespace WebApi.ViewModels
 {
     public enum Grade
     {

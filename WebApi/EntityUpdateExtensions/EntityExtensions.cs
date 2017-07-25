@@ -1,10 +1,10 @@
 ﻿using Model;
-using Service.ViewModels;
+using WebApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Service.EntityUpdateExtensions
+namespace WebApi.EntityUpdateExtensions
 {
     public static class EntityExtensions
     {

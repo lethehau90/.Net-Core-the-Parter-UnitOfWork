@@ -10,9 +10,10 @@ using Model;
 using Data.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Service.Services;
-using Service.ViewModels;
+using WebApi.ViewModels;
 using Common;
 using Microsoft.Extensions.Options;
+using WebApi.EntityUpdateExtensions;
 
 namespace WebApi.Controllers
 {
@@ -50,9 +51,10 @@ namespace WebApi.Controllers
                 int totalPage = (int)Math.Ceiling((double)totalRow / (pageSize));
 
                 var queryPage = _studentService.GetPagedList(search, page, pageSize).AsQueryable();
+                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(queryPage);
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = queryPage,
+                    Items = queryModel,
                     MaxPage = _mySettings.MaxPage,
                     Page = page + 1,
                     TotalRow = totalRow,
@@ -82,9 +84,10 @@ namespace WebApi.Controllers
                 int totalPage = (int)Math.Ceiling((double)totalRow / (pageSize));
 
                 var queryPage = await  _studentService.GetPagedListAsync(search, page, pageSize);
+                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(queryPage);
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = queryPage,
+                    Items = queryModel,
                     MaxPage = _mySettings.MaxPage,
                     Page = page + 1,
                     TotalRow = totalRow,
@@ -139,7 +142,8 @@ namespace WebApi.Controllers
             try
             {
                 var query = await  _studentService.FindAsync(Id);
-                return query;
+                var queryModel = Mapper.Map<Student, StudentViewModel>(query);
+                return queryModel;
             }
             catch (Exception ex)
             {
@@ -153,7 +157,8 @@ namespace WebApi.Controllers
             try
             {
                 var query = _studentService.GetAll();
-                return Ok(query);
+                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
+                return Ok(queryModel);
             }
             catch (Exception ex)
             {
@@ -177,10 +182,11 @@ namespace WebApi.Controllers
                 int totalPage = (int)Math.Ceiling((Double)totalRow / pageSize);
 
                 query = query.Skip((page) * pageSize).Skip(page);
+                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
 
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = query,
+                    Items = queryModel,
                     MaxPage = _mySettings.MaxPage,
                     Page = page + 1,
                     TotalRow = totalRow,
@@ -205,9 +211,10 @@ namespace WebApi.Controllers
                 int totalRow = 0;
                 var query = _studentService.GetMultiPaging(page, pageSize, out totalRow);
                 int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
+                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = query,
+                    Items = queryModel,
                     Page = page + 1,
                     TotalRow = totalRow,
                     TotalPage = totalPage,
@@ -272,14 +279,16 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Insert")]
-        public IActionResult Insert([FromBody]StudentViewModel student)
+        public IActionResult Insert([FromBody]StudentViewModel studentVM)
         {
             try
             {
-                if (_studentService.Find(student.Id) != null) return NoContent();
-                _studentService.Insert(student);
+                if (_studentService.Find(studentVM.Id) != null) return NoContent();
+                Student newStudent = new Student();
+                newStudent.UpdateStudent(studentVM);
+               _studentService.Insert(newStudent);
                 _unitOfWork.SaveChanges();
-                return Ok(student);
+                return Ok("Success");
             }
             catch (Exception ex)
             {
@@ -288,12 +297,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("InsertAsync")]
-        public async Task InsertAsync([FromBody]StudentViewModel student)
+        public async Task InsertAsync([FromBody]StudentViewModel studentVM)
         {
             try
             {
-                if (_studentService.Find(student.Id) != null) return;
-                 _studentService.Insert(student);
+                if (_studentService.Find(studentVM.Id) != null) return;
+                Student newStudent = new Student();
+                newStudent.UpdateStudent(studentVM);
+                 _studentService.Insert(newStudent);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -303,12 +314,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("UpdateAsync")]
-        public async Task UpdateAsync([FromBody]StudentViewModel student)
+        public async Task UpdateAsync([FromBody]StudentViewModel studentVM)
         {
             try
             {
-                if (_studentService.Find(student.Id) == null) return;
-                _studentService.Update(student);
+                var query = _studentService.Find(studentVM.Id);
+                if (query == null) return;
+                query.UpdateStudent(studentVM);
+                _studentService.Update(query);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -318,15 +331,16 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("Update")]
-        public IActionResult Update([FromBody]StudentViewModel student)
+        public IActionResult Update([FromBody]StudentViewModel studentVM)
         {
             try
             {
-                var query = _studentService.Find(student.Id);
+                var query = _studentService.Find(studentVM.Id);
                 if (query == null) return NoContent();
-                _studentService.Update(student);
+                query.UpdateStudent(studentVM);
+                _studentService.Update(query);
                 _unitOfWork.SaveChanges();
-                return Ok(student);
+                return Ok(query);
             }
             catch (Exception ex)
             {

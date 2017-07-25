@@ -5,33 +5,31 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Data.Repositories;
-using Service.ViewModels;
 using AutoMapper;
 using System.Threading.Tasks;
 using Data.Infrastructure.UnitOfWork;
 using Data.Infrastructure.PagedList;
-using Service.EntityUpdateExtensions;
 
 namespace Service.Services
 {
     public interface IStudentService
     {
-        IQueryable<StudentViewModel> GetPagedList(string search, int pageindex, int pageSize);
-        Task<IQueryable<StudentViewModel>> GetPagedListAsync(string search, int pageIndex, int pageSize);
-        IQueryable<StudentViewModel> FromSql(string sql, string Id);
-        StudentViewModel Find(int Id);
-        Task<StudentViewModel> FindAsync(int Id);
-        void Insert(StudentViewModel student);
-        Task InsertAsync(StudentViewModel student);
-        void Update(StudentViewModel student);
-        void Delete(StudentViewModel student);
+        IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize);
+        Task<IQueryable<Student>> GetPagedListAsync(string search, int pageIndex, int pageSize);
+        IQueryable<Student> FromSql(string sql, string Id);
+        Student Find(int Id);
+        Task<Student> FindAsync(int Id);
+        void Insert(Student student);
+        Task InsertAsync(Student student);
+        void Update(Student student);
+        void Delete(Student student);
         void Delete(int Id);
         //Custom
         int Count(int Id);
-        IQueryable<StudentViewModel> GetAll();
-        StudentViewModel GetSingleByCondition(int Id);
-        IQueryable<StudentViewModel> GetMulti();
-        IQueryable<StudentViewModel> GetMultiPaging(int page, int pageSize, out int totalRow);
+        IQueryable<Student> GetAll();
+        Student GetSingleByCondition(int Id);
+        IQueryable<Student> GetMulti();
+        IQueryable<Student> GetMultiPaging(int page, int pageSize, out int totalRow);
         bool CheckContains(int Id);
     }
     public class StudentService : IStudentService
@@ -54,7 +52,7 @@ namespace Service.Services
             return _studentRepository.Count(x => x.Id.Equals(Id));
         }
 
-        public void Delete(StudentViewModel student)
+        public void Delete(Student student)
         {
             var query = _studentRepository.Find(student.Id);
             if (query != null)
@@ -73,48 +71,44 @@ namespace Service.Services
             }
         }
 
-        public StudentViewModel Find(int Id)
+        public Student Find(int Id)
         {
             var query = _studentRepository.Find(Id);
-            var queryModel = Mapper.Map<Student, StudentViewModel>(query);
-            return queryModel;
+            return query;
         }
 
-        public async Task<StudentViewModel> FindAsync(int Id)
+        public async Task<Student> FindAsync(int Id)
         {
             var query = await _studentRepository.FindAsync(Id);
-            var queryModel = Mapper.Map<Student, StudentViewModel>(query);
+            var queryModel = Mapper.Map<Student, Student>(query);
             return queryModel;
         }
 
-        public IQueryable<StudentViewModel> FromSql(string sql, string Id)
+        public IQueryable<Student> FromSql(string sql, string Id)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<StudentViewModel> GetAll()
+        public IQueryable<Student> GetAll()
         {
             //include for <<new string[] {"Enrollments"}>>
             var query = _studentRepository.GetAll(null);
-            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
-            return queryModel.AsQueryable();
+            return query.AsQueryable();
         }
 
-        public IQueryable<StudentViewModel> GetMulti()
+        public IQueryable<Student> GetMulti()
         {
             var query = _studentRepository.GetMulti(x => true);
-            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
-            return queryModel.AsQueryable();
+            return query.AsQueryable();
         }
 
-        public IQueryable<StudentViewModel> GetMultiPaging(int page, int pageSize, out int totalRow)
+        public IQueryable<Student> GetMultiPaging(int page, int pageSize, out int totalRow)
         {
             var query = _studentRepository.GetMultiPaging(null, out totalRow, page, pageSize);
-            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
-            return queryModel.AsQueryable();
+            return query.AsQueryable();
         }
 
-        public IQueryable<StudentViewModel> GetPagedList(string search, int pageindex, int pageSize)
+        public IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize)
         {
             IEnumerable<Student> query;
 
@@ -126,11 +120,10 @@ namespace Service.Services
             {
                 query = _studentRepository.GetPagedList(x => x.Name.Contains(search), null, pageindex, pageSize).Items;
             }
-            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
-            return queryModel.AsQueryable();
+            return query.AsQueryable();
         }
 
-        public async Task<IQueryable<StudentViewModel>> GetPagedListAsync(string search, int pageIndex, int pageSize)
+        public async Task<IQueryable<Student>> GetPagedListAsync(string search, int pageIndex, int pageSize)
         {
            IPagedList<Student> query;
 
@@ -142,36 +135,30 @@ namespace Service.Services
             {
                  query = await _studentRepository.GetPagedListAsync(x => x.Name.Contains(search), null, null, pageIndex, pageSize);
             }
-            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query.Items);
+            var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<Student>>(query.Items);
             return queryModel.AsQueryable();
         }
 
-        public StudentViewModel GetSingleByCondition(int Id)
+        public Student GetSingleByCondition(int Id)
         {
             var query = _studentRepository.GetSingleByCondition(x => x.Id.Equals(Id), new string[] { "Enrollments" });
-            var queryModel = Mapper.Map<Student, StudentViewModel>(query);
+            var queryModel = Mapper.Map<Student, Student>(query);
             return queryModel;
         }
 
-        public void Insert(StudentViewModel studentVM)
+        public void Insert(Student student)
         {
-            var newStudent = new Student();
-            newStudent.UpdateStudent(studentVM);
-            _studentRepository.Insert(newStudent);
+            _studentRepository.Insert(student);
         }
 
-        public async Task InsertAsync(StudentViewModel studentVM)
+        public async Task InsertAsync(Student student)
         {
-            var newStudent = new Student();
-            newStudent.UpdateStudent(studentVM);
-            await _studentRepository.InsertAsync(newStudent);
+            await _studentRepository.InsertAsync(student);
         }
 
-        public void Update(StudentViewModel student)
+        public void Update(Student student)
         {
-            var query = _studentRepository.Find(student.Id);
-            query.UpdateStudent(student);
-            _studentRepository.Update(query);
+            _studentRepository.Update(student);
         }
     }
 }

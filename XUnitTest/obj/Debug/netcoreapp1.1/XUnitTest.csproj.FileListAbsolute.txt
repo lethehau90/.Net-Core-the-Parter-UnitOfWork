@@ -18,3 +18,5 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.csprojResolveAssemblyReference.cache
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\WebApi.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\WebApi.pdb

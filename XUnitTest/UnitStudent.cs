@@ -8,9 +8,9 @@ using Moq;
 using System.Collections.Generic;
 using NSubstitute;
 using System.Linq;
-using Service.ViewModels;
+using WebApi.ViewModels;
 using AutoMapper;
-using Service.Mappings;
+using WebApi.Mappings;
 
 namespace XUnitTest
 {
@@ -48,6 +48,25 @@ namespace XUnitTest
 
             Assert.NotNull(request.ToList());
             Assert.Equal(4, request.Count());
+        }
+
+        public void Create()
+        {
+            var mockStudentRepository = new Mock<IStudentRepository>();
+            var mocUnitOfWork = new Mock<IUnitOfWork>();
+
+            Student studentVm = new Student();
+            studentVm = new Student
+            {
+                Id = 4,
+                Name = "test 4"
+            };
+
+            mockStudentRepository.Setup(x => x.Insert());
+
+            var _studentService = new StudentService(_studentRepository, _unitOfWork);
+            _studentService.Insert(studentVm);
+
         }
 
 

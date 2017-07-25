@@ -13,7 +13,7 @@ using Data;
 using Data.Repositories;
 using AutoMapper;
 using Data.Infrastructure.UnitOfWork;
-using Service.Mappings;
+using WebApi.Mappings;
 using Service.Services;
 using Common;//config my app
 
