@@ -111,9 +111,5 @@ namespace XUnitTest
             Assert.NotNull(resurt);
             Assert.Equal(4, resurt.Id);
         }
-
-
-
-
     }
 }
