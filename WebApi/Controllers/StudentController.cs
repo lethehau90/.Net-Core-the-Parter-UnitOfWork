@@ -51,10 +51,10 @@ namespace WebApi.Controllers
                 int totalPage = (int)Math.Ceiling((double)totalRow / (pageSize));
 
                 var queryPage = _studentService.GetPagedList(search, page, pageSize).AsQueryable();
-                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(queryPage);
+                var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(queryPage);
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = queryModel,
+                    Items = queryModel.AsQueryable(),
                     MaxPage = _mySettings.MaxPage,
                     Page = page + 1,
                     TotalRow = totalRow,
@@ -84,10 +84,10 @@ namespace WebApi.Controllers
                 int totalPage = (int)Math.Ceiling((double)totalRow / (pageSize));
 
                 var queryPage = await  _studentService.GetPagedListAsync(search, page, pageSize);
-                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(queryPage);
+                var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(queryPage);
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = queryModel,
+                    Items = queryModel.AsQueryable(),
                     MaxPage = _mySettings.MaxPage,
                     Page = page + 1,
                     TotalRow = totalRow,
@@ -128,6 +128,7 @@ namespace WebApi.Controllers
             try
             {
                 var query = _studentService.Find(Id);
+                var queryModel = Mapper.Map<Student, StudentViewModel>(query);
                 return Ok(query);
             }
             catch (Exception ex)
@@ -157,8 +158,8 @@ namespace WebApi.Controllers
             try
             {
                 var query = _studentService.GetAll();
-                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
-                return Ok(queryModel);
+                var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
+                return Ok(queryModel.AsQueryable());
             }
             catch (Exception ex)
             {
@@ -182,11 +183,11 @@ namespace WebApi.Controllers
                 int totalPage = (int)Math.Ceiling((Double)totalRow / pageSize);
 
                 query = query.Skip((page) * pageSize).Skip(page);
-                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
+                var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
 
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = queryModel,
+                    Items = queryModel.AsQueryable(),
                     MaxPage = _mySettings.MaxPage,
                     Page = page + 1,
                     TotalRow = totalRow,
@@ -211,10 +212,10 @@ namespace WebApi.Controllers
                 int totalRow = 0;
                 var query = _studentService.GetMultiPaging(page, pageSize, out totalRow);
                 int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-                var queryModel = Mapper.Map<IQueryable<Student>, IQueryable<StudentViewModel>>(query);
+                var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(query);
                 var paginationSet = new PaginationSet<StudentViewModel>()
                 {
-                    Items = queryModel,
+                    Items = queryModel.AsQueryable(),
                     Page = page + 1,
                     TotalRow = totalRow,
                     TotalPage = totalPage,
@@ -288,7 +289,7 @@ namespace WebApi.Controllers
                 newStudent.UpdateStudent(studentVM);
                _studentService.Insert(newStudent);
                 _unitOfWork.SaveChanges();
-                return Ok("Success");
+                return Ok(newStudent);
             }
             catch (Exception ex)
             {

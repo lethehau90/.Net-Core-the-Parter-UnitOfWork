@@ -50,6 +50,7 @@ namespace XUnitTest
             Assert.Equal(4, request.Count());
         }
 
+        [Fact]
         public void Create()
         {
             var mockStudentRepository = new Mock<IStudentRepository>();
@@ -58,15 +59,32 @@ namespace XUnitTest
             Student studentVm = new Student();
             studentVm = new Student
             {
-                Id = 4,
-                Name = "test 4"
+                Id = 5,
+                Name = "test 5"
             };
 
-            mockStudentRepository.Setup(x => x.Insert());
+            mockStudentRepository.Setup(x => x.Insert(studentVm));
+            mockStudentRepository.Setup(x => x.Find(5)).Returns(studentVm);
+            mockStudentRepository.Setup(x => x.GetAll(null, null, true)).Returns(_listStudent.AsQueryable());
+
+            _studentRepository = mockStudentRepository.Object;
+            _unitOfWork = mocUnitOfWork.Object;
 
             var _studentService = new StudentService(_studentRepository, _unitOfWork);
-            _studentService.Insert(studentVm);
 
+            //insert test
+            _studentService.Insert(studentVm);
+            _unitOfWork.SaveChanges();
+
+            //Find the test a value 5 
+            var resurt = _studentService.Find(5);
+
+            //get All the test
+            var resurtAll = _studentService.GetAll();
+
+            Assert.NotNull(resurt);
+            Assert.Equal(5, resurt.Id);
+            Assert.Equal(5, resurtAll.Count());
         }
 
 
