@@ -21,10 +21,8 @@ namespace WebApi.ViewModels
         [Required]
         public int StudentId { get; set; }
 
-        [ForeignKey("CourseId")]
         public virtual CourseViewModel Course { get; set; }
 
-        [ForeignKey("StudentId")]
         public virtual StudentViewModel Student { get; set; }
     }
 }
