@@ -1,0 +1,9 @@
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\bin\Debug\Database.dacpac
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\bin\Debug\Database.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\bin\Debug\Database.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\obj\Debug\Model.xml
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\obj\Debug\refactor.xml
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\obj\Debug\postdeploy.sql
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\obj\Debug\predeploy.sql
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\obj\Debug\Database.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Database\obj\Debug\Database.pdb

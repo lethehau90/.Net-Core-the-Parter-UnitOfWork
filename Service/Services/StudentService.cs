@@ -9,6 +9,7 @@ using AutoMapper;
 using System.Threading.Tasks;
 using Data.Infrastructure.UnitOfWork;
 using Data.Infrastructure.PagedList;
+using System.Data.SqlClient;
 
 namespace Service.Services
 {
@@ -16,7 +17,7 @@ namespace Service.Services
     {
         IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize);
         Task<IQueryable<Student>> GetPagedListAsync(string search, int pageIndex, int pageSize);
-        IQueryable<Student> FromSql(string sql, string Id);
+        IQueryable<Student> FromSql(string Id);
         Student Find(int Id);
         Task<Student> FindAsync(int Id);
         void Insert(Student student);
@@ -84,9 +85,13 @@ namespace Service.Services
             return queryModel;
         }
 
-        public IQueryable<Student> FromSql(string sql, string Id)
+        public IQueryable<Student> FromSql(string Id)
         {
-            throw new NotImplementedException();
+            object[] sqlParams =
+            {
+                new SqlParameter("@Id", Id)
+            };
+            return _studentRepository.FromSql("getById @Id", sqlParams);
         }
 
         public IQueryable<Student> GetAll()
@@ -125,15 +130,15 @@ namespace Service.Services
 
         public async Task<IQueryable<Student>> GetPagedListAsync(string search, int pageIndex, int pageSize)
         {
-           IPagedList<Student> query;
+            IPagedList<Student> query;
 
             if (string.IsNullOrEmpty(search))
             {
-                 query = await _studentRepository.GetPagedListAsync(null, null, null, pageIndex, pageSize);
+                query = await _studentRepository.GetPagedListAsync(null, null, null, pageIndex, pageSize);
             }
             else
             {
-                 query = await _studentRepository.GetPagedListAsync(x => x.Name.Contains(search), null, null, pageIndex, pageSize);
+                query = await _studentRepository.GetPagedListAsync(x => x.Name.Contains(search), null, null, pageIndex, pageSize);
             }
             var queryModel = Mapper.Map<IEnumerable<Student>, IEnumerable<Student>>(query.Items);
             return queryModel.AsQueryable();

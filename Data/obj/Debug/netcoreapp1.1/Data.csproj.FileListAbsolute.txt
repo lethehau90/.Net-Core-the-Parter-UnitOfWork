@@ -1,9 +1,9 @@
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\bin\Debug\netcoreapp1.1\Data.deps.json
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\bin\Debug\netcoreapp1.1\Data.dll
-E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.csprojResolveAssemblyReference.cache
-E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.AssemblyInfo.cs
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\bin\Debug\netcoreapp1.1\Data.pdb
-E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.dll
-E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\bin\Debug\netcoreapp1.1\Model.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\bin\Debug\netcoreapp1.1\Model.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.csprojResolveAssemblyReference.cache
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.AssemblyInfo.cs
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.dll
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Data\obj\Debug\netcoreapp1.1\Data.pdb

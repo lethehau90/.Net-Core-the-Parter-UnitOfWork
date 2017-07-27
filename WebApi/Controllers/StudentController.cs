@@ -35,6 +35,22 @@ namespace WebApi.Controllers
             _mySettings = mySettings.Value;
         }
 
+        [HttpGet("FromSql")]
+        public IActionResult FromSql(string Id)
+        {
+            try
+            {
+                IQueryable<Student> request = _studentService.FromSql(Id);
+                var requestModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(request);
+                return Ok(request.AsQueryable());
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("GetPagedList")]
         public IActionResult GetPagedList(string search, int page = 1, int pageSize = 20)
         {

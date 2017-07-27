@@ -2959,6 +2959,13 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v1.1",
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.1.2"
+        }
+      },
       "Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.1",
@@ -8591,6 +8598,11 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "Common/1.0.0": {
+      "type": "project",
+      "path": "../Common/Common.csproj",
+      "msbuildProject": "../Common/Common.csproj"
+    },
     "Data/1.0.0": {
       "type": "project",
       "path": "../Data/Data.csproj",
@@ -8605,6 +8617,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v1.1": [
       "AutoMapper >= 6.1.1",
+      "Common >= 1.0.0",
       "Data >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 1.1.2",
       "Microsoft.EntityFrameworkCore.Tools >= 1.1.1",
@@ -8635,6 +8648,9 @@
             },
             "E:\\WEB MVC\\CoreNet\\ExampleStudent\\ExampleStudent\\Data\\Data.csproj": {
               "projectPath": "E:\\WEB MVC\\CoreNet\\ExampleStudent\\ExampleStudent\\Data\\Data.csproj"
+            },
+            "E:\\WEB MVC\\CoreNet\\ExampleStudent\\ExampleStudent\\Common\\Common.csproj": {
+              "projectPath": "E:\\WEB MVC\\CoreNet\\ExampleStudent\\ExampleStudent\\Common\\Common.csproj"
             }
           }
         }
