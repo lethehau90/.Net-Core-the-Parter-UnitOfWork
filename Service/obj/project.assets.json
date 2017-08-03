@@ -2970,6 +2970,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.1",
         "dependencies": {
+          "Common": "1.0.0",
           "Microsoft.EntityFrameworkCore": "1.1.2",
           "Microsoft.EntityFrameworkCore.AutoHistory": "1.1.2",
           "Microsoft.EntityFrameworkCore.Design": "1.1.2",

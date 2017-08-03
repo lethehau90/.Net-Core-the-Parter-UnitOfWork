@@ -4,3 +4,4 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Common\bin\Debug\netcoreapp1.1\
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Common\obj\Debug\netcoreapp1.1\Common.AssemblyInfo.cs
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Common\obj\Debug\netcoreapp1.1\Common.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Common\obj\Debug\netcoreapp1.1\Common.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Common\obj\Debug\netcoreapp1.1\Common.csprojResolveAssemblyReference.cache

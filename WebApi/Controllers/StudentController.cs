@@ -14,6 +14,7 @@ using WebApi.ViewModels;
 using Common;
 using Microsoft.Extensions.Options;
 using WebApi.EntityUpdateExtensions;
+using Common.Store;
 
 namespace WebApi.Controllers
 {
@@ -42,6 +43,23 @@ namespace WebApi.Controllers
             {
                 IQueryable<Student> request = _studentService.FromSql(Id);
                 var requestModel = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(request);
+                return Ok(request.AsQueryable());
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //connect Custom db prodedure
+        [HttpGet("getModelFromQuery")]
+        public IActionResult getModelFromQuery(string Id)
+        {
+            try
+            {
+                IQueryable<StudentStore> request = _studentService.getModelFromQuery(Id);
+           
                 return Ok(request.AsQueryable());
 
             }

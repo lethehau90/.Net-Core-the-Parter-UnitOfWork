@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Data.Infrastructure.UnitOfWork;
 using Data.Infrastructure.PagedList;
 using System.Data.SqlClient;
+using Common.Store;
 
 namespace Service.Services
 {
@@ -18,6 +19,7 @@ namespace Service.Services
         IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize);
         Task<IQueryable<Student>> GetPagedListAsync(string search, int pageIndex, int pageSize);
         IQueryable<Student> FromSql(string Id);
+        IQueryable<StudentStore> getModelFromQuery(string Id);
         Student Find(int Id);
         Task<Student> FindAsync(int Id);
         void Insert(Student student);
@@ -164,6 +166,11 @@ namespace Service.Services
         public void Update(Student student)
         {
             _studentRepository.Update(student);
+        }
+
+        public IQueryable<StudentStore> getModelFromQuery(string Id)
+        {
+            return _studentRepository.getModelFromQuery(Id);
         }
     }
 }

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v1.1": {
       "data/1.0.0": {
         "dependencies": {
+          "Common": "1.0.0",
           "Microsoft.EntityFrameworkCore": "1.1.2",
           "Microsoft.EntityFrameworkCore.AutoHistory": "1.1.2",
           "Microsoft.EntityFrameworkCore.Design": "1.1.2",
@@ -363,6 +364,11 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
+      "common/1.0.0": {
+        "runtime": {
+          "Common.dll": {}
+        }
+      },
       "model/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "1.1.2",
@@ -675,6 +681,11 @@
       "sha512": "sha512-MLCDo3oPs8LDuQcg1O8sqo6bNjngZPibDwNuGVaACjG+/PSWwh18ecFnk2tN+x6aB+qTATXaVbNqyZGWAa9aPA==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "model/1.0.0": {
       "type": "project",
