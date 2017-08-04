@@ -28,8 +28,8 @@ namespace Data.Repositories
         }
         public IQueryable<StudentStore> getModelFromQuery(string Id)
         {
-            SqlParameter[] parms = new SqlParameter[] { new SqlParameter("@Id", Id) };
-            var result = RDFacadeExtensions.GetModelFromQuery<StudentStore>(_dbContext, "getById @Id", parms).AsQueryable();
+            SqlParameter[] queryParams = new SqlParameter[] { new SqlParameter("@Id", Id) };
+            var result = RDFacadeExtensions.GetModelFromQuery<StudentStore>(_dbContext, "getById @Id", queryParams).AsQueryable();
             return result;
         }
        
