@@ -8,9 +8,10 @@ using Data;
 namespace Data.Migrations
 {
     [DbContext(typeof(HauLeDbContext))]
-    partial class HauLeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170804170924_AddClainUser")]
+    partial class AddClainUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
