@@ -16,6 +16,7 @@ namespace WebApi.Mappings
             CreateMap<Student, StudentViewModel>();
             CreateMap<Course, CourseViewModel>();
             CreateMap<Enrollment, EnrollmentViewModel>();
+            CreateMap<AppUser, AccountViewModel>();
         }
     }
 }

@@ -103,7 +103,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("GetPagedListAsync")]
-        public async Task<PaginationSet<StudentViewModel>>  GetPagedListAsync(string search, int page = 1, int pageSize = 20)
+        public async Task<IActionResult>  GetPagedListAsync(string search, int page = 1, int pageSize = 20)
         {
             try
             {
@@ -128,12 +128,12 @@ namespace WebApi.Controllers
                     TotalPage = totalPage
                 };
 
-                return paginationSet;
+                return Ok(paginationSet);
 
             }
             catch (Exception ex)
             {
-                return null;
+                return BadRequest(ex.Message);
             }
         }
 
@@ -172,17 +172,17 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("FindAsync")]
-        public async Task<StudentViewModel> FindAsync(int Id)
+        public async Task<IActionResult> FindAsync(int Id)
         {
             try
             {
                 var query = await  _studentService.FindAsync(Id);
                 var queryModel = Mapper.Map<Student, StudentViewModel>(query);
-                return queryModel;
+                return Ok(queryModel);
             }
             catch (Exception ex)
             {
-                return null;
+                return BadRequest(ex.Message);
             }
         }
 
@@ -318,6 +318,11 @@ namespace WebApi.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 if (_studentService.Find(studentVM.Id) != null) return NoContent();
                 Student newStudent = new Student();
                 newStudent.UpdateStudent(studentVM);
@@ -332,36 +337,48 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("InsertAsync")]
-        public async Task InsertAsync([FromBody]StudentViewModel studentVM)
+        public async Task<IActionResult> InsertAsync([FromBody]StudentViewModel studentVM)
         {
             try
             {
-                if (_studentService.Find(studentVM.Id) != null) return;
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (_studentService.Find(studentVM.Id) != null) return BadRequest("query Id not null");
                 Student newStudent = new Student();
                 newStudent.UpdateStudent(studentVM);
                  _studentService.Insert(newStudent);
                 await _unitOfWork.SaveChangesAsync();
+                return Ok(newStudent);
             }
             catch (Exception ex)
             {
-                return;
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPut("UpdateAsync")]
-        public async Task UpdateAsync([FromBody]StudentViewModel studentVM)
+        public async Task<IActionResult> UpdateAsync([FromBody]StudentViewModel studentVM)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var query = _studentService.Find(studentVM.Id);
-                if (query == null) return;
+                if (query == null) return BadRequest("query is null");
                 query.UpdateStudent(studentVM);
                 _studentService.Update(query);
                 await _unitOfWork.SaveChangesAsync();
+                return Ok(studentVM);
             }
             catch (Exception ex)
             {
-                return;
+                return BadRequest(ex.Message);
             }
         }
 
@@ -370,6 +387,11 @@ namespace WebApi.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var query = _studentService.Find(studentVM.Id);
                 if (query == null) return NoContent();
                 query.UpdateStudent(studentVM);

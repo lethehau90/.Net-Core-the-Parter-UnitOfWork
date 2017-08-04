@@ -14,5 +14,10 @@ namespace WebApi.EntityUpdateExtensions
             student.Name = studentVM.Name;
             student.EnrollmentDate = studentVM.EnrollmentDate;
         }
+
+        public static void updateAccount(this AppUser account, AccountViewModel accountVM)
+        {
+            
+        }
     }
 }
