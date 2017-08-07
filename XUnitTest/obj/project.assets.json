@@ -2572,6 +2572,22 @@
           }
         }
       },
+      "StructureMap/4.5.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Reflection.Emit.Lightweight": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.1.0",
+          "System.Runtime.Loader": "4.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.5/StructureMap.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.5/StructureMap.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4826,7 +4842,8 @@
           "Microsoft.IdentityModel.Tokens": "5.1.4",
           "Microsoft.NETCore.App": "1.1.2",
           "Model": "1.0.0",
-          "System.IdentityModel.Tokens.Jwt": "5.1.4"
+          "System.IdentityModel.Tokens.Jwt": "5.1.4",
+          "structuremap": "4.5.1"
         }
       },
       "Model/1.0.0": {
@@ -7138,6 +7155,21 @@
         "runtime.win7-x86.runtime.native.system.data.sqlclient.sni.4.3.0.nupkg.sha512",
         "runtime.win7-x86.runtime.native.system.data.sqlclient.sni.nuspec",
         "runtimes/win7-x86/native/sni.dll"
+      ]
+    },
+    "StructureMap/4.5.1": {
+      "sha512": "5h83KuvdkMtDllLfGZdgOPHF5erbF9MOeX2S6mCJOpXYJ9RGiZl0vnrzS+Cs0rs7wLPAWig9ENBPFbjPpUdcXA==",
+      "type": "package",
+      "path": "structuremap/4.5.1",
+      "files": [
+        "lib/net45/StructureMap.dll",
+        "lib/net45/StructureMap.xml",
+        "lib/netstandard1.3/StructureMap.dll",
+        "lib/netstandard1.3/StructureMap.xml",
+        "lib/netstandard1.5/StructureMap.dll",
+        "lib/netstandard1.5/StructureMap.xml",
+        "structuremap.4.5.1.nupkg.sha512",
+        "structuremap.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {

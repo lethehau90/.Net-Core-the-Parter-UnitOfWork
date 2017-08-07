@@ -1,4 +1,6 @@
-﻿using Model;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +81,9 @@ namespace Data
                 context.Enrollments.Add(e);
             }
                 context.SaveChanges();
+
+
+            
 
         }
 

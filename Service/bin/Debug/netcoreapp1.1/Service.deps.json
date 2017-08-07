@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "785650b9915bfce31708052c4f19b0ad8362c02c"
+    "signature": "7a6c2640107a6152e6ea394c24eef069c8eca715"
   },
   "compilationOptions": {},
   "targets": {
@@ -402,6 +402,11 @@
           }
         }
       },
+      "structuremap/4.5.1": {
+        "runtime": {
+          "lib/netstandard1.5/StructureMap.dll": {}
+        }
+      },
       "system.collections.nongeneric/4.3.0": {
         "runtime": {
           "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
@@ -546,7 +551,8 @@
           "Microsoft.EntityFrameworkCore.Tools": "1.1.1",
           "Microsoft.IdentityModel.Tokens": "5.1.4",
           "Model": "1.0.0",
-          "System.IdentityModel.Tokens.Jwt": "5.1.4"
+          "System.IdentityModel.Tokens.Jwt": "5.1.4",
+          "StructureMap": "4.5.1"
         },
         "runtime": {
           "Data.dll": {}
@@ -881,6 +887,13 @@
       "sha512": "sha512-4cXRTIcttvIreAoqK/5hzTtzepeggac+m5A0rzH+9zLtnFh2J0rLuGeJR4KjNLyKqPzO0kjqrs5lkRJEKX8HAA==",
       "path": "runtime.win7-x86.runtime.native.system.data.sqlclient.sni/4.3.0",
       "hashPath": "runtime.win7-x86.runtime.native.system.data.sqlclient.sni.4.3.0.nupkg.sha512"
+    },
+    "structuremap/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5h83KuvdkMtDllLfGZdgOPHF5erbF9MOeX2S6mCJOpXYJ9RGiZl0vnrzS+Cs0rs7wLPAWig9ENBPFbjPpUdcXA==",
+      "path": "structuremap/4.5.1",
+      "hashPath": "structuremap.4.5.1.nupkg.sha512"
     },
     "system.collections.nongeneric/4.3.0": {
       "type": "package",

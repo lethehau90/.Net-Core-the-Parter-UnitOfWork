@@ -8,8 +8,8 @@ using Data;
 namespace Data.Migrations
 {
     [DbContext(typeof(HauLeDbContext))]
-    [Migration("20170804170924_AddClainUser")]
-    partial class AddClainUser
+    [Migration("20170806173448_UpdateDescriptionRole")]
+    partial class UpdateDescriptionRole
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,9 @@ namespace Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Name");
 
                     b.Property<string>("NormalizedName");
@@ -31,6 +34,8 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -38,17 +43,17 @@ namespace Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AppRoleId");
+
                     b.Property<string>("ClaimType");
 
                     b.Property<string>("ClaimValue");
-
-                    b.Property<string>("IdentityRoleId");
 
                     b.Property<string>("RoleId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdentityRoleId");
+                    b.HasIndex("AppRoleId");
 
                     b.ToTable("AppRoleClaims");
                 });
@@ -99,15 +104,15 @@ namespace Data.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.Property<string>("AppUserId");
+                    b.Property<string>("AppRoleId");
 
-                    b.Property<string>("IdentityRoleId");
+                    b.Property<string>("AppUserId");
 
                     b.HasKey("RoleId", "UserId");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("AppRoleId");
 
-                    b.HasIndex("IdentityRoleId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("AppUserRoles");
                 });
@@ -135,11 +140,14 @@ namespace Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<string>("Address");
+
                     b.Property<string>("Avatar");
 
                     b.Property<decimal>("Balance");
 
-                    b.Property<DateTime?>("BirthDay");
+                    b.Property<DateTime?>("BirthDay")
+                        .HasMaxLength(256);
 
                     b.Property<string>("ConcurrencyStamp");
 
@@ -147,7 +155,8 @@ namespace Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(256);
 
                     b.Property<bool?>("Gender");
 
@@ -168,6 +177,8 @@ namespace Data.Migrations
                     b.Property<DateTime>("RegisteredDate");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<bool?>("Status");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -214,6 +225,22 @@ namespace Data.Migrations
                     b.ToTable("Enrollments");
                 });
 
+            modelBuilder.Entity("Model.JobSeeker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("IdentityId");
+
+                    b.Property<string>("Location");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityId");
+
+                    b.ToTable("JobSeekers");
+                });
+
             modelBuilder.Entity("Model.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -230,11 +257,22 @@ namespace Data.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("Model.AppRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole");
+
+                    b.Property<string>("Description");
+
+                    b.ToTable("AppRoles");
+
+                    b.HasDiscriminator().HasValue("AppRole");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
+                    b.HasOne("Model.AppRole")
                         .WithMany("Claims")
-                        .HasForeignKey("IdentityRoleId");
+                        .HasForeignKey("AppRoleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
@@ -253,13 +291,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
+                    b.HasOne("Model.AppRole")
+                        .WithMany("Users")
+                        .HasForeignKey("AppRoleId");
+
                     b.HasOne("Model.AppUser")
                         .WithMany("Roles")
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
-                        .WithMany("Users")
-                        .HasForeignKey("IdentityRoleId");
                 });
 
             modelBuilder.Entity("Model.Enrollment", b =>
@@ -273,6 +311,13 @@ namespace Data.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.JobSeeker", b =>
+                {
+                    b.HasOne("Model.AppUser", "Identity")
+                        .WithMany()
+                        .HasForeignKey("IdentityId");
                 });
         }
     }
