@@ -50,5 +50,7 @@ namespace WebApi.EntityUpdateExtensions
             appRole.Name = appRoleViewModel.Name;
             appRole.Description = appRoleViewModel.Description;
         }
+
+       
     }
 }

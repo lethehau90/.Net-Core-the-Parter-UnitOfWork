@@ -38,27 +38,45 @@ namespace WebApi.Controllers
         }
 
         // POST api/account
-        //[HttpPost("createRoles")]
-        //private async Task<IActionResult> CreateRoles([FromBody]AppRoleViewModel roleVM)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPost("createRoles")]
+        private async Task<IActionResult> CreateRoles([FromBody]AppRoleViewModel roleVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    try
-        //    {
-                
-        //    }
-        //    catch (NameDuplicatedException dex)
-        //    {
-        //        return BadRequest(dex.Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+            try
+            {
+                var RoleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var UserManager = _serviceProvider.GetRequiredService<UserManager<AppUser>>();
+                string[] roleNames = { "Admin", "Manager", "Member" };
+                IdentityResult roleResult;
+
+                var newAppRole = new AppRole();
+                newAppRole.UpdateAppRole(roleVM);
+
+                foreach (var roleName in newAppRole.Name)
+                {
+                    var roleExist = await RoleManager.RoleExistsAsync(roleName.ToString());
+                    if (!roleExist)
+                    {
+                        //create the roles and seed them to the database: Question 2
+                        roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName.ToString()));
+                    }
+                }
+
+                return NoContent();
+            }
+            catch (NameDuplicatedException dex)
+            {
+                return BadRequest(dex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         // POST api/account
         [HttpPost("register")]
@@ -79,8 +97,7 @@ namespace WebApi.Controllers
 
                 if (result.Succeeded)
                 {
-                    var RoleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    var UserManager = _serviceProvider.GetRequiredService<UserManager<AppUser>>();
+                    
 
                     var roles = registerVM.Roles.ToArray();
 
