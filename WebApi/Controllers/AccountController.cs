@@ -38,8 +38,8 @@ namespace WebApi.Controllers
         }
 
         // POST api/account
-        [HttpPost("createRoles")]
-        private async Task<IActionResult> CreateRoles([FromBody]AppRoleViewModel roleVM)
+        [HttpPost("addroles")]
+        public async Task<IActionResult> CreateRoles([FromBody]AppRoleViewModel roleVM)
         {
             if (!ModelState.IsValid)
             {
@@ -50,23 +50,14 @@ namespace WebApi.Controllers
             {
                 var RoleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var UserManager = _serviceProvider.GetRequiredService<UserManager<AppUser>>();
-                string[] roleNames = { "Admin", "Manager", "Member" };
                 IdentityResult roleResult;
 
                 var newAppRole = new AppRole();
                 newAppRole.UpdateAppRole(roleVM);
 
-                foreach (var roleName in newAppRole.Name)
-                {
-                    var roleExist = await RoleManager.RoleExistsAsync(roleName.ToString());
-                    if (!roleExist)
-                    {
-                        //create the roles and seed them to the database: Question 2
-                        roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName.ToString()));
-                    }
-                }
+                roleResult = await RoleManager.CreateAsync(newAppRole);
 
-                return NoContent();
+                return Ok(roleResult);
             }
             catch (NameDuplicatedException dex)
             {
