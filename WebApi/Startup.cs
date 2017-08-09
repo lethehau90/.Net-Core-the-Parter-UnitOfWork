@@ -156,6 +156,9 @@ namespace WebApi
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
+            app.UseCors(builder => builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
             //Add Data To DB
             HauLeDbInitializer.Initialize(context);
         }
