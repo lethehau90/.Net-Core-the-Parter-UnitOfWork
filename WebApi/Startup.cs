@@ -1,28 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using Data;
-using Data.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using FluentValidation.AspNetCore;
 using AutoMapper;
-using Data.Infrastructure.UnitOfWork;
-using WebApi.Mappings;
-using Service.Services;
-using Common;//config my app
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Data;
 using WebApi.Auth;
 using WebApi.ViewModels;
-using Microsoft.IdentityModel.Tokens;
 using WebApi.Helpers;
 using Model;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Text;
+using Data.Infrastructure.UnitOfWork;
+using Data.Repositories;
+using Service.Services;
+using WebApi.Mappings;
+using Newtonsoft.Json.Serialization;
+using Common;
+using WebApi.Extensions;
 
 namespace WebApi
 {
@@ -103,8 +105,8 @@ namespace WebApi
             Mapper.Initialize(x =>
                 x.AddProfile<AutoMapperConfiguration>()
             );
-            services.AddCors(options => options.AddPolicy("AllowCors",
-                            builder => { builder.AllowAnyOrigin().WithMethods("GET", "PUT", "POST", "DELETE").AllowAnyHeader(); }));
+            //services.AddCors(options => options.AddPolicy("AllowCors",
+            //                builder => { builder.AllowAnyOrigin().WithMethods("GET", "PUT", "POST", "DELETE").AllowAnyHeader(); }));
 
             // Add framework services.
             services.AddMvc().AddJsonOptions(opts =>
@@ -124,10 +126,9 @@ namespace WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, HauLeDbContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, HauLeDbContext contextDb)
         {
             loggerFactory.AddConsole();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -135,6 +136,42 @@ namespace WebApi
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseExceptionHandler(
+           builder =>
+           {
+               builder.Run(
+                 async context =>
+                 {
+                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                     context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                     var error = context.Features.Get<IExceptionHandlerFeature>();
+                     if (error != null)
+                     {
+                         context.Response.AddApplicationError(error.Error.Message);
+                         await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
+                     }
+                 });
+           });
+
+            app.UseExceptionHandler(
+            builder =>
+            {
+                builder.Run(
+                  async context =>
+                  {
+                      context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                      context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                      var error = context.Features.Get<IExceptionHandlerFeature>();
+                      if (error != null)
+                      {
+                          context.Response.AddApplicationError(error.Error.Message);
+                          await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
+                      }
+                  });
+            });
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             var tokenValidationParameters = new TokenValidationParameters
@@ -153,6 +190,13 @@ namespace WebApi
                 ClockSkew = TimeSpan.Zero
             };
 
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
@@ -160,7 +204,7 @@ namespace WebApi
             .AllowAnyHeader()
             .AllowAnyMethod());
             //Add Data To DB
-            HauLeDbInitializer.Initialize(context);
+            HauLeDbInitializer.Initialize(contextDb);
         }
     }
 }

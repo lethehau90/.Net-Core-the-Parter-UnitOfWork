@@ -20,9 +20,12 @@ namespace Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<JobSeeker> JobSeekers { get; set; }
+        public DbSet<Error> Errors { set; get; }
 
         public DbSet<AppRole> AppRoles { set; get; }
+        public DbSet<JobSeeker> JobSeekers { get; set; }
+        public DbSet<Function> Functions { set; get; }
+        public DbSet<Permission> Permissions { set; get; }
 
         //public override int SaveChanges()
         //{
