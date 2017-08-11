@@ -61,7 +61,7 @@ namespace WebApi
             // Get options from app settings
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-            // Configure JwtIssuerOptions
+            // Configure JwtIssuerOptions  Add JWT generation endpoint:
             services.Configure<JwtIssuerOptions>(options =>
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
@@ -105,8 +105,10 @@ namespace WebApi
             Mapper.Initialize(x =>
                 x.AddProfile<AutoMapperConfiguration>()
             );
-            //services.AddCors(options => options.AddPolicy("AllowCors",
-            //                builder => { builder.AllowAnyOrigin().WithMethods("GET", "PUT", "POST", "DELETE").AllowAnyHeader(); }));
+
+            
+            services.AddCors(options => options.AddPolicy("AllowCors",
+                            builder => { builder.AllowAnyOrigin().WithMethods("GET", "PUT", "POST", "DELETE").AllowAnyHeader(); }));
 
             // Add framework services.
             services.AddMvc().AddJsonOptions(opts =>
@@ -137,23 +139,6 @@ namespace WebApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseExceptionHandler(
-           builder =>
-           {
-               builder.Run(
-                 async context =>
-                 {
-                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                     context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
-                     var error = context.Features.Get<IExceptionHandlerFeature>();
-                     if (error != null)
-                     {
-                         context.Response.AddApplicationError(error.Error.Message);
-                         await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
-                     }
-                 });
-           });
 
             app.UseExceptionHandler(
             builder =>
@@ -196,6 +181,9 @@ namespace WebApi
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
+
+
+
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

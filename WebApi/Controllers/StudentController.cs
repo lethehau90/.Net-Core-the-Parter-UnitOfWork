@@ -15,6 +15,7 @@ using Common;
 using Microsoft.Extensions.Options;
 using WebApi.EntityUpdateExtensions;
 using Common.Store;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -69,6 +70,7 @@ namespace WebApi.Controllers
             }
         }
 
+        [Authorize(Policy = "ApiUser")]
         [HttpGet("GetPagedList")]
         public IActionResult GetPagedList(string search, int page = 1, int pageSize = 20)
         {
