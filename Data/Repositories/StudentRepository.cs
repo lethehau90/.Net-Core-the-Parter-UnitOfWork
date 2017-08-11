@@ -23,7 +23,7 @@ namespace Data.Repositories
         public StudentRepository(HauLeDbContext entityDbContext) : base(entityDbContext)
         {
             _dbContext = entityDbContext ?? throw new ArgumentNullException(nameof(entityDbContext));
-            _dbSet = _dbContext.Set<Student>();
+            _dbSet = _dbContext.Set<Student>(); 
 
         }
         public IQueryable<StudentStore> getModelFromQuery(string Id)
