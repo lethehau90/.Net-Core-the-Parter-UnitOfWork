@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.ViewModels
+namespace WebApi.ViewModels.System
 {
-    public class RegisterViewModel
+    public class AppUserViewModel
     {
 
         public string Id { set; get; }

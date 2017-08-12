@@ -25,16 +25,19 @@ namespace WebApi.Controllers
     {
         private readonly IStudentService _studentService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IServiceProvider _serviceProvider;
         private MySettings _mySettings { get; set; } //setting config the MyAPP
 
         public StudentController(
             IStudentService studentService,
             IUnitOfWork unitOfWork,
+            IServiceProvider serviceProvider,
             IOptions<MySettings> mySettings)
         {
             _studentService = studentService;
             _unitOfWork = unitOfWork;
             _mySettings = mySettings.Value;
+            _serviceProvider = serviceProvider;
         }
 
         [HttpGet("FromSql")]
@@ -69,6 +72,7 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [Authorize(Policy = "ApiUser")]
         [HttpGet("GetPagedList")]

@@ -24,7 +24,7 @@ using Service.Services;
 using WebApi.Mappings;
 using Newtonsoft.Json.Serialization;
 using Common;
-using WebApi.Extensions;
+using WebApi.EntityUpdateExtensions;
 
 namespace WebApi
 {
@@ -181,9 +181,6 @@ namespace WebApi
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
-
-
-
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("getlistpaging")]
-        public IActionResult GetListPaging(string search, int page = 1, int pageSize = 20,  string filter = null)
+        public IActionResult GetListPaging(int page = 1, int pageSize = 20,  string filter = null)
         {
             try
             {
@@ -212,8 +212,8 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("detail/{Id}")]
-        public  IActionResult Details(string Id)
+        [HttpGet("getById/{Id}")]
+        public  IActionResult GetById(string Id) //detail app role
         {
             try
             {
@@ -222,13 +222,15 @@ namespace WebApi.Controllers
                     return BadRequest(nameof(Id) + " Không có giá trị");
                 }
 
-                AppRole appRole = _unitOfWork.GetRepository<AppRole>().Find(Id);
+                var appRole = _unitOfWork.GetRepository<AppRole>().Find(Id);
                 if(appRole == null)
                 {
-                    return Ok(appRole);
+                    return Ok("Không có dữ liệu");
                 }
 
-                return Ok(appRole);
+                var appRoleModel = Mapper.Map<AppRole, AppRoleViewModel>(appRole);
+
+                return Ok(appRoleModel);
             }
             catch (Exception ex)
             {
@@ -237,7 +239,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Create(AppRoleViewModel appRoleVm)
+        public IActionResult Create([FromBody]AppRoleViewModel appRoleVm)
         {
             try
             {
@@ -265,7 +267,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult Update(AppRoleViewModel appRoleVm)
+        public IActionResult Update([FromBody]AppRoleViewModel appRoleVm)
         {
             try
             {

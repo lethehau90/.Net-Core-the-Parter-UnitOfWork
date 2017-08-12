@@ -17,23 +17,23 @@ namespace WebApi.EntityUpdateExtensions
             student.EnrollmentDate = studentVM.EnrollmentDate;
         }
 
-        public static void updateRegister(this AppUser account, RegisterViewModel registerVM)
+        public static void updateApUser(this AppUser appUser, AppUserViewModel appUserVM)
         {
-            account.Id = registerVM.Id; ;
-            account.FullName = registerVM.FullName;
-            if (!string.IsNullOrEmpty(registerVM.BirthDay))
+            appUser.Id = appUserVM.Id; ;
+            appUser.FullName = appUserVM.FullName;
+            if (!string.IsNullOrEmpty(appUserVM.BirthDay))
             {
-                DateTime dateTime = DateTime.ParseExact(registerVM.BirthDay, "dd/MM/yyyy", new CultureInfo("vi-VN"));
-                account.BirthDay = dateTime;
+                DateTime dateTime = DateTime.ParseExact(appUserVM.BirthDay, "dd/MM/yyyy", new CultureInfo("vi-VN"));
+                appUser.BirthDay = dateTime;
             }
-            account.Email = registerVM.Email;
-            account.PasswordHash = registerVM.Password;
-            account.UserName = registerVM.UserName;
-            account.Address = registerVM.Address;
-            account.PhoneNumber = registerVM.PhoneNumber;
-            account.Avatar = registerVM.Avatar;
-            account.Status = registerVM.Status;
-            account.Gender = registerVM.Gender;
+            appUser.Email = appUserVM.Email;
+            appUser.PasswordHash = appUserVM.Password;
+            appUser.UserName = appUserVM.UserName;
+            appUser.Address = appUserVM.Address;
+            appUser.PhoneNumber = appUserVM.PhoneNumber;
+            appUser.Avatar = appUserVM.Avatar;
+            appUser.Status = appUserVM.Status;
+            appUser.Gender = appUserVM.Gender;
         }
 
         public static void updateCredentials(this AppUser account, CredentialsViewModel CredentialsVM)
