@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Model;
 using WebApi.ViewModels;
+using WebApi.ViewModels.System;
 
 namespace WebApi.Mappings
 {
@@ -19,6 +20,8 @@ namespace WebApi.Mappings
             CreateMap<AppUser, RegisterViewModel>();
             CreateMap<AppUser, CredentialsViewModel>();
             CreateMap<AppRole, AppRoleViewModel>();
+            CreateMap<Function, FunctionViewModel>();
+            CreateMap<Permission, PermissionViewModel>();
         }
     }
 }

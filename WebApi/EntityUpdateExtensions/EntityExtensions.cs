@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
+using WebApi.ViewModels.System;
 
 namespace WebApi.EntityUpdateExtensions
 {
@@ -51,6 +52,27 @@ namespace WebApi.EntityUpdateExtensions
             appRole.Description = appRoleViewModel.Description;
         }
 
-       
+        public static void UpdateFunction(this Function function, FunctionViewModel functionVm)
+        {
+            function.Name = functionVm.Name;
+            function.DisplayOrder = functionVm.DisplayOrder;
+            function.IconCss = functionVm.IconCss;
+            function.Status = functionVm.Status;
+            function.ParentId = functionVm.ParentId;
+            function.Status = functionVm.Status;
+            function.URL = functionVm.URL;
+            function.ID = functionVm.ID;
+        }
+        public static void UpdatePermission(this Permission permission, PermissionViewModel permissionVm)
+        {
+            permission.RoleId = permissionVm.RoleId;
+            permission.FunctionId = permissionVm.FunctionId;
+            permission.CanCreate = permissionVm.CanCreate;
+            permission.CanDelete = permissionVm.CanDelete;
+            permission.CanRead = permissionVm.CanRead;
+            permission.CanUpdate = permissionVm.CanUpdate;
+        }
+
+
     }
 }

@@ -18,5 +18,6 @@ namespace Model
             this.Description = description;
         }
         public virtual string Description { get; set; }
+
     }
 }
