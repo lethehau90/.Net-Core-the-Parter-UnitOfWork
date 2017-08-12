@@ -121,7 +121,6 @@ namespace WebApi.Controllers
             }
         }
 
-
         [HttpPut("update")]
         public IActionResult Update([FromBody]FunctionViewModel functionViewModel)
         {
@@ -164,7 +163,6 @@ namespace WebApi.Controllers
             {
                 _functionService.Delete(Id);
                 _functionService.Save();
-
                 return Ok(Id);
             }
             catch (Exception ex)
