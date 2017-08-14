@@ -18,7 +18,7 @@ namespace WebApi.Helpers
                     avatar = "avatar",
                     email = "email",
                     username = "username",
-                    roles = "roles",
+                    rolesCore = "rolesCore",
                     permissions = "permissions";
             }
 

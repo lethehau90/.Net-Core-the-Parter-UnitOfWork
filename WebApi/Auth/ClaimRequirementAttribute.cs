@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,12 @@ namespace WebApi.Auth
         {
             string Function = _claim.Value;
             string Action = _claim.Type;
+
+            var roles = JsonConvert.DeserializeObject<List<string>>(context.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "rolesCore").Value);
+
+            var permissions = JsonConvert.DeserializeObject<List<string>>(context.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "fullName").Value);
+
+
             var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
             if (!hasClaim)
             {

@@ -10,6 +10,7 @@ using Model;
 using Newtonsoft.Json;
 using Service.Services;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace WebApi.Auth
 {
@@ -45,7 +46,7 @@ namespace WebApi.Auth
                  identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.avatar),
                  identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.email),
                  identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.username),
-                 identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.roles),
+                 identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.rolesCore),
                  identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.permissions)
              };
 
@@ -83,7 +84,7 @@ namespace WebApi.Auth
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.avatar, avatar),
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.email, email),
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.username, requestUser.UserName),
-                    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.roles, JsonConvert.SerializeObject(roles)),
+                    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.rolesCore, roles.ToString()),
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.permissions, JsonConvert.SerializeObject(permissions))
 
             });

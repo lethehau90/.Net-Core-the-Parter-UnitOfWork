@@ -78,7 +78,7 @@ namespace WebApi
                                         Constants.Strings.JwtClaimIdentifiers.avatar,
                                         Constants.Strings.JwtClaimIdentifiers.email,
                                         Constants.Strings.JwtClaimIdentifiers.username,
-                                        Constants.Strings.JwtClaimIdentifiers.roles,
+                                        Constants.Strings.JwtClaimIdentifiers.rolesCore,
                                         Constants.Strings.JwtClaimIdentifiers.permissions
                                         ));
             });

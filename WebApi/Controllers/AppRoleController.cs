@@ -286,10 +286,21 @@ namespace WebApi.Controllers
                 var appRole = _unitOfWork.GetRepository<AppRole>().Find(appRoleVm.Id);
                 try
                 {
-                    appRole.UpdateAppRole(appRoleVm, "update");
-                    _unitOfWork.GetRepository<AppRole>().Update(appRole);
-                    _unitOfWork.SaveChangesAsync();
-                    return Ok(appRole);
+                    var requestName = _unitOfWork.GetRepository<AppRole>().GetSingleByCondition(x => x.Name.Equals(appRoleVm.Name) && x.Id != appRoleVm.Id);
+                    
+                    if(requestName == null)
+                    {
+                        appRole.UpdateAppRole(appRoleVm, "update");
+                        _unitOfWork.GetRepository<AppRole>().Update(appRole);
+                        _unitOfWork.SaveChangesAsync();
+                        return Ok(appRole);
+                    }
+                    else
+                    {
+                        return Ok(new { Succeeded = false, Errors = "Quyền "+ appRoleVm .Name+ " đã tồn tại" });
+                    }
+
+                   
                 }
                 catch (NameDuplicatedException dex)
                 {
