@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Data
 {
@@ -12,9 +14,11 @@ namespace Data
     {
 
 
-        public static void Initialize(HauLeDbContext context)
+        public static async  void   Initialize(HauLeDbContext context)
         {
-            context.Database.EnsureCreated();
+             
+
+        context.Database.EnsureCreated();
 
             if (context.Students.Any())
             {
@@ -83,10 +87,55 @@ namespace Data
                 context.SaveChanges();
 
 
-            
+            //await CreateUser(context, serviceProvider);
 
         }
+       //static IServiceProvider serviceProvider;
+       // private static async Task CreateUser(HauLeDbContext context, IServiceProvider _serviceProvider)
+       // {
+       //     serviceProvider = _serviceProvider;
 
-        
+       //  var _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+       //     var _userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+
+       //     context.Database.EnsureCreated();
+       //     if (context.Users.Count() == 0)
+       //     {
+       //         AppUser newAppUser = new AppUser();
+
+       //         var user = new AppUser()
+       //         {
+       //             UserName = "lehau",
+       //             Email = "lethehauu90.vn@gmail.com",
+       //             EmailConfirmed = true,
+       //             BirthDay = DateTime.Now,
+       //             FullName = "Le The Hau",
+       //             Avatar = "/assets/images/img.jpg",
+       //             Gender = true,
+       //             Status = true
+       //         };
+
+       //         if(context.Users.Count(x=>x.UserName == "admin") == 0)
+       //         {
+       //             await _userManager.CreateAsync(user, "123654$");
+
+       //             if (!_roleManager.Roles.Any())
+       //             {
+       //                 await _roleManager.CreateAsync(new AppRole { Name = "Admin", Description = "Quản trị viên" });
+       //                 await _roleManager.CreateAsync(new AppRole { Name = "Member", Description = "Người dùng" });
+       //             }
+
+       //             AppUser adminUser = await _userManager.FindByNameAsync("admin");
+       //             await _userManager.AddToRolesAsync(adminUser, new string[] { "Admin", "Member" });
+
+       //         }
+       //     }
+           
+       // }
+
+
+
+
+
     }
 }

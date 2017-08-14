@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class InitDatabase : Migration
+    public partial class Initdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,10 @@ namespace Data.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true)
+                    NormalizedName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,6 +87,44 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Errors",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Message = table.Column<string>(nullable: true),
+                    StackTrace = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Errors", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Functions",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: false),
+                    DisplayOrder = table.Column<int>(nullable: false),
+                    IconCss = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    ParentId = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: true),
+                    Status = table.Column<bool>(nullable: false),
+                    URL = table.Column<string>(maxLength: 256, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Functions", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Functions_Functions_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Functions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -104,17 +144,17 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AppRoleId = table.Column<string>(nullable: true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
-                    IdentityRoleId = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AppRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppRoleClaims_AppRoles_IdentityRoleId",
-                        column: x => x.IdentityRoleId,
+                        name: "FK_AppRoleClaims_AppRoles_AppRoleId",
+                        column: x => x.AppRoleId,
                         principalTable: "AppRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -169,22 +209,22 @@ namespace Data.Migrations
                 {
                     RoleId = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
-                    AppUserId = table.Column<string>(nullable: true),
-                    IdentityRoleId = table.Column<string>(nullable: true)
+                    AppRoleId = table.Column<string>(nullable: true),
+                    AppUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AppUserRoles", x => new { x.RoleId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_AppUserRoles_AppUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AppUsers",
+                        name: "FK_AppUserRoles_AppRoles_AppRoleId",
+                        column: x => x.AppRoleId,
+                        principalTable: "AppRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AppUserRoles_AppRoles_IdentityRoleId",
-                        column: x => x.IdentityRoleId,
-                        principalTable: "AppRoles",
+                        name: "FK_AppUserRoles_AppUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AppUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -205,6 +245,36 @@ namespace Data.Migrations
                         name: "FK_JobSeekers_AppUsers_IdentityId",
                         column: x => x.IdentityId,
                         principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permissions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CanCreate = table.Column<bool>(nullable: false),
+                    CanDelete = table.Column<bool>(nullable: false),
+                    CanRead = table.Column<bool>(nullable: false),
+                    CanUpdate = table.Column<bool>(nullable: false),
+                    FunctionId = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: true),
+                    RoleId = table.Column<string>(maxLength: 450, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Functions_FunctionId",
+                        column: x => x.FunctionId,
+                        principalTable: "Functions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Permissions_AppRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AppRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -237,9 +307,9 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppRoleClaims_IdentityRoleId",
+                name: "IX_AppRoleClaims_AppRoleId",
                 table: "AppRoleClaims",
-                column: "IdentityRoleId");
+                column: "AppRoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppUserClaims_AppUserId",
@@ -252,14 +322,14 @@ namespace Data.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppUserRoles_AppRoleId",
+                table: "AppUserRoles",
+                column: "AppRoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AppUserRoles_AppUserId",
                 table: "AppUserRoles",
                 column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppUserRoles_IdentityRoleId",
-                table: "AppUserRoles",
-                column: "IdentityRoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_CourseId",
@@ -272,9 +342,24 @@ namespace Data.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Functions_ParentId",
+                table: "Functions",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobSeekers_IdentityId",
                 table: "JobSeekers",
                 column: "IdentityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_FunctionId",
+                table: "Permissions",
+                column: "FunctionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_RoleId",
+                table: "Permissions",
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -298,10 +383,13 @@ namespace Data.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
+                name: "Errors");
+
+            migrationBuilder.DropTable(
                 name: "JobSeekers");
 
             migrationBuilder.DropTable(
-                name: "AppRoles");
+                name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "Courses");
@@ -311,6 +399,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AppUsers");
+
+            migrationBuilder.DropTable(
+                name: "Functions");
+
+            migrationBuilder.DropTable(
+                name: "AppRoles");
         }
     }
 }

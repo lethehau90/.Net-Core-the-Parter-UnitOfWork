@@ -16,6 +16,8 @@ using Microsoft.Extensions.Options;
 using WebApi.ViewModels.DataContracts;
 using WebApi.EntityUpdateExtensions;
 using Common.Exceptions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebApi.Controllers
 {
@@ -25,16 +27,18 @@ namespace WebApi.Controllers
     {
         private IPermissionService _permissionService;
         private IFunctionService _functionService;
-        private IUnitOfWork _unitOfWork;
-        private MySettings _mySettings { get; set; } //setting config the MyAPP
         private readonly UserManager<AppUser> _userManager;
+        private IUnitOfWork _unitOfWork;
+        private IServiceProvider _serviceProvider;
+        private MySettings _mySettings { get; set; } //setting config the MyAPP
 
         public AppRoleController(
                 IPermissionService permissionService,
                 IFunctionService functionService,
                 IUnitOfWork unitOfWork,
                 IOptions<MySettings> mySettings,
-                UserManager<AppUser> userManager
+                UserManager<AppUser> userManager,
+                IServiceProvider serviceProvider
             )
         {
             _permissionService = permissionService;
@@ -42,6 +46,7 @@ namespace WebApi.Controllers
             _mySettings = mySettings.Value;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _serviceProvider = serviceProvider;
         }
 
         [HttpGet("getlistpaging")]
@@ -239,28 +244,31 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Create([FromBody]AppRoleViewModel appRoleVm)
+        public async Task<IActionResult> Create([FromBody]AppRoleViewModel appRoleVm)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+                var RoleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var UserManager = _serviceProvider.GetRequiredService<UserManager<AppUser>>();
+                IdentityResult roleResult;
 
                 var newAppRole = new AppRole();
                 newAppRole.UpdateAppRole(appRoleVm);
-                try
-                {
-                    _unitOfWork.GetRepository<AppRole>().Insert(newAppRole);
-                    return Ok(appRoleVm);
-                }
-                catch (NameDuplicatedException dex)
-                {
-                    return BadRequest(dex.Message);
-                }
+
+                roleResult = await RoleManager.CreateAsync(newAppRole);
+
+                return Ok(roleResult);
             }
-            catch(Exception ex)
+            catch (NameDuplicatedException dex)
+            {
+                return BadRequest(dex.Message);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -280,6 +288,7 @@ namespace WebApi.Controllers
                 {
                     appRole.UpdateAppRole(appRoleVm, "update");
                     _unitOfWork.GetRepository<AppRole>().Update(appRole);
+                    _unitOfWork.SaveChangesAsync();
                     return Ok(appRole);
                 }
                 catch (NameDuplicatedException dex)
@@ -299,6 +308,7 @@ namespace WebApi.Controllers
             {
                 var appRole = _unitOfWork.GetRepository<AppRole>().Find(Id);
                 _unitOfWork.GetRepository<AppRole>().Delete(appRole);
+                _unitOfWork.SaveChangesAsync();
                 return Ok(Id);
             }
             catch (Exception ex)

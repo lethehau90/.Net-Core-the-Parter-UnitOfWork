@@ -4,14 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using WebApi.Auth;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
-    [Authorize(Policy = "ApiUser")]
+    
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
+        [Authorize(Policy = "ApiUser")]
+        [ClaimRequirement("Read", "USER")]
         [HttpGet]
         public IEnumerable<string> Get()
         {

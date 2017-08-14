@@ -8,8 +8,8 @@ using Data;
 namespace Data.Migrations
 {
     [DbContext(typeof(HauLeDbContext))]
-    [Migration("20170809162214_Add Error Permissions Function")]
-    partial class AddErrorPermissionsFunction
+    [Migration("20170814001726_Init database")]
+    partial class Initdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -72,7 +72,15 @@ namespace WebApi
             // api user claim policy
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol,
+                    Constants.Strings.JwtClaims.ApiAccess,
+                                        Constants.Strings.JwtClaimIdentifiers.fullName,
+                                        Constants.Strings.JwtClaimIdentifiers.avatar,
+                                        Constants.Strings.JwtClaimIdentifiers.email,
+                                        Constants.Strings.JwtClaimIdentifiers.username,
+                                        Constants.Strings.JwtClaimIdentifiers.roles,
+                                        Constants.Strings.JwtClaimIdentifiers.permissions
+                                        ));
             });
 
             services.AddIdentity<AppUser, IdentityRole>
@@ -96,8 +104,14 @@ namespace WebApi
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddScoped<IErrorRepository, ErrorRepository>();
+            services.AddScoped<IFunctionRepository, FunctionRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
 
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IErrorService, ErrorService>();
+            services.AddScoped<IFunctionService, FunctionService>();
+            services.AddScoped<IPermissionService, PermissionService>();
             //services.AddScoped<IEnrollmentService, EnrollmentService>();
             //services.AddScoped<ICourseSevice, CourseSevice>();
 
@@ -106,7 +120,7 @@ namespace WebApi
                 x.AddProfile<AutoMapperConfiguration>()
             );
 
-            
+
             services.AddCors(options => options.AddPolicy("AllowCors",
                             builder => { builder.AllowAnyOrigin().WithMethods("GET", "PUT", "POST", "DELETE").AllowAnyHeader(); }));
 

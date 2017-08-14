@@ -11,7 +11,15 @@ namespace WebApi.Helpers
         {
             public static class JwtClaimIdentifiers
             {
-                public const string Rol = "rol", Id = "id";
+                public const string
+                    Rol = "rol",
+                    Id = "id",
+                    fullName = "fullName",
+                    avatar = "avatar",
+                    email = "email",
+                    username = "username",
+                    roles = "roles",
+                    permissions = "permissions";
             }
 
             public static class JwtClaims
