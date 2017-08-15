@@ -185,13 +185,15 @@ namespace WebApi.Controllers
 
                             foreach (var p in data.Permissions)
                             {
-                                var childPermission = new Permission();
-                                childPermission.FunctionId = item.ID;
-                                childPermission.RoleId = p.RoleId;
-                                childPermission.CanRead = p.CanRead;
-                                childPermission.CanCreate = p.CanCreate;
-                                childPermission.CanDelete = p.CanDelete;
-                                childPermission.CanUpdate = p.CanUpdate;
+                                var childPermission = new Permission()
+                                {
+                                    FunctionId = item.ID,
+                                    RoleId = p.RoleId,
+                                    CanRead = p.CanRead,
+                                    CanCreate = p.CanCreate,
+                                    CanDelete = p.CanDelete,
+                                    CanUpdate = p.CanUpdate
+                                };
                                 _permissionService.Add(childPermission);
                             }
                         }

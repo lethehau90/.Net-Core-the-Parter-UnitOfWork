@@ -19,7 +19,7 @@ namespace Service.Services
         IQueryable<Student> GetPagedList(string search, int pageindex, int pageSize);
         Task<IQueryable<Student>> GetPagedListAsync(string search, int pageIndex, int pageSize);
         IQueryable<Student> FromSql(string Id);
-        IQueryable<StudentStore> getModelFromQuery(string Id);
+        IQueryable<StudentStore> GetModelFromQuery(string Id);
         Student Find(int Id);
         Task<Student> FindAsync(int Id);
         void Insert(Student student);
@@ -168,7 +168,7 @@ namespace Service.Services
             _studentRepository.Update(student);
         }
 
-        public IQueryable<StudentStore> getModelFromQuery(string Id)
+        public IQueryable<StudentStore> GetModelFromQuery(string Id)
         {
             return _studentRepository.getModelFromQuery(Id);
         }

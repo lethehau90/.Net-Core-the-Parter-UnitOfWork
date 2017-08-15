@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Service.Services;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
+using Data;
 
 namespace WebApi.Auth
 {
@@ -20,14 +21,16 @@ namespace WebApi.Auth
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPermissionService _permissionService;
         private readonly UserManager<AppUser> _userManager;
+        HauLeDbContext _dbContext;
 
-        public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions, IUnitOfWork unitOfWork, IPermissionService permissionService, UserManager<AppUser> userManager)
+        public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions, IUnitOfWork unitOfWork, IPermissionService permissionService, UserManager<AppUser> userManager, HauLeDbContext dbContext)
         {
             _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);
             _unitOfWork = unitOfWork;
             _permissionService = permissionService;
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
@@ -67,7 +70,13 @@ namespace WebApi.Auth
         public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
         {
             var requestUser = _unitOfWork.GetRepository<AppUser>().Find(id);
-            var roles = _userManager.GetRolesAsync(requestUser);
+
+            //var roles = _userManager.GetRolesAsync(requestUser); don't take value name roles
+            var role = from T3 in _dbContext.AppRoles 
+                       join T4 in _dbContext.UserRoles on T3.Id equals T4.RoleId
+                       where T4.UserId == id
+                       select T3.Name;
+
             var permissions = _permissionService.GetByUserId(requestUser.Id);
 
             string fullName = string.IsNullOrEmpty(requestUser.FullName) ? "" : requestUser.FullName;
@@ -84,7 +93,7 @@ namespace WebApi.Auth
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.avatar, avatar),
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.email, email),
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.username, requestUser.UserName),
-                    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.rolesCore, roles.ToString()),
+                    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.rolesCore, JsonConvert.SerializeObject(role)),
                     new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.permissions, JsonConvert.SerializeObject(permissions))
 
             });

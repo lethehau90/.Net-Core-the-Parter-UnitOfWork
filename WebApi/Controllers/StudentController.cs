@@ -62,7 +62,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                IQueryable<StudentStore> request = _studentService.getModelFromQuery(Id);
+                IQueryable<StudentStore> request = _studentService.GetModelFromQuery(Id);
            
                 return Ok(request.AsQueryable());
 
