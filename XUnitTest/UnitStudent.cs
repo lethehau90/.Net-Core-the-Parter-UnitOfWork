@@ -8,9 +8,9 @@ using Moq;
 using System.Collections.Generic;
 using NSubstitute;
 using System.Linq;
-using WebApi.ViewModels;
+//using WebApi.ViewModels;
 using AutoMapper;
-using WebApi.Mappings;
+//using WebApi.Mappings;
 
 namespace XUnitTest
 {
@@ -26,10 +26,10 @@ namespace XUnitTest
                     new Student() { Id = 4 , Name = "SV4"}
             };
 
-        public UnitStudent()
-        {
-            Mapper.Initialize(x => x.AddProfile<AutoMapperConfiguration>());
-        }
+        //public UnitStudent()
+        //{
+        //    Mapper.Initialize(x => x.AddProfile<AutoMapperConfiguration>());
+        //}
 
         [Fact]
         public void GetAll()

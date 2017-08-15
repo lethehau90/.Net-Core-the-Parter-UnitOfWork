@@ -10,13 +10,12 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Data.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Model.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Service.dll
-E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\WebApi.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Common.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Data.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Model.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\Service.pdb
-E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\bin\Debug\netcoreapp1.1\WebApi.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.csprojResolveAssemblyReference.cache
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.AssemblyInfo.cs
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.csproj.CoreCompileInputs.cache

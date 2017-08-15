@@ -15,3 +15,4 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\obj\Debug\netcoreapp1.1\
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\obj\Debug\netcoreapp1.1\WebApi.AssemblyInfo.cs
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\obj\Debug\netcoreapp1.1\WebApi.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\obj\Debug\netcoreapp1.1\WebApi.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\WebApi\obj\Debug\netcoreapp1.1\WebApi.csproj.CoreCompileInputs.cache
