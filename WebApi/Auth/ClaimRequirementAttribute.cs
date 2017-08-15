@@ -37,8 +37,6 @@ namespace WebApi.Auth
 
             var roles = JsonConvert.DeserializeObject<List<string>>(context.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "rolesCore").Value);
 
-
-
             if (roles.Count > 0)
             {
                 if (!roles.Contains(RoleEnum.Admin.ToString()))
@@ -78,16 +76,6 @@ namespace WebApi.Auth
             {
                 context.Result = new UnauthorizedResult();
             }
-            //var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
-            //if (!hasClaim)
-            //{
-            //    context.Result = new UnauthorizedResult();
-            //    //await next();
-            //}
-            //else
-            //{
-            //    await next();
-            //}
         }
     }
 }
