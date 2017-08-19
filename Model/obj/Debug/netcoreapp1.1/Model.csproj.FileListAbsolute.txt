@@ -5,3 +5,4 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Model\obj\Debug\netcoreapp1.1\M
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Model\obj\Debug\netcoreapp1.1\Model.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Model\obj\Debug\netcoreapp1.1\Model.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Model\obj\Debug\netcoreapp1.1\Model.csprojResolveAssemblyReference.cache
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Model\obj\Debug\netcoreapp1.1\Model.csproj.CoreCompileInputs.cache

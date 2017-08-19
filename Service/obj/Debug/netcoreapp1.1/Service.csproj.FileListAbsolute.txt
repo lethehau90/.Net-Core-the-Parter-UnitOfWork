@@ -11,3 +11,4 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.AssemblyInfo.cs
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.pdb
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\Service\obj\Debug\netcoreapp1.1\Service.csproj.CoreCompileInputs.cache
