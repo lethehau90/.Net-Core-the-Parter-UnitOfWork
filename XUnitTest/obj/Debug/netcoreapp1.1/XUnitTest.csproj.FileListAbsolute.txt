@@ -19,3 +19,4 @@ E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.dll
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.pdb
 E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.csproj.CoreCompileInputs.cache
+E:\WEB MVC\CoreNet\ExampleStudent\ExampleStudent\XUnitTest\obj\Debug\netcoreapp1.1\XUnitTest.AssemblyInfoInputs.cache
